@@ -1,10 +1,10 @@
 #pragma once
 
-#include "raylib.h"
+#include "sl.h"
 
 #include "../utilities.h"
 
-namespace pong2
+namespace crabOut
 {
 	struct Player
 	{

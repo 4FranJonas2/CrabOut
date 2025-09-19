@@ -1,6 +1,6 @@
 #pragma once
 
-namespace pong2
+namespace crabOut
 {
 	//float defaultVel = 0.1f;
 	enum class SceneStatus

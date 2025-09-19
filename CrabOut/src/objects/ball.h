@@ -4,7 +4,7 @@
 
 #include "..\utilities.h"
 
-namespace pong2
+namespace crabOut
 {
 	struct Circle
 	{
