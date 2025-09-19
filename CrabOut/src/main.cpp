@@ -2,7 +2,7 @@
 
 int main()
 {
-	pong2::GamePlay();
+	crabOut::GamePlay();
 
 	return 0;
 }

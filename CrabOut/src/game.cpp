@@ -4,7 +4,7 @@
 
 using namespace std;
 
-namespace pong2
+namespace crabOut
 {
 	void GamePlay()
 	{
@@ -18,19 +18,22 @@ namespace pong2
 
 		Init(player1, player2, ball, gameStats);
 
-		while (!WindowShouldClose())
+		
+
+		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
 			Update(player1, player2, gameStats, ball);
-
-			BeginDrawing();
-
-			ClearBackground(BLACK);
 			Draw(player1, player2, ball, gameStats);
 
-			EndDrawing();
+			// background glow
+			slSetForeColor(0.1, 0.9, 0.2, 0.4);
+
+			// draw everything
+			slRender();
 		}
 
-		CloseWindow();
+		// close the window and shut down SIGIL
+		slClose();
 	}
 
 	void Init(Player& player1, Player& player2, Ball& ball, Pong& gameStats)
@@ -38,7 +41,8 @@ namespace pong2
 		switch ((SceneStatus)gameStats.gameManager)
 		{
 		case SceneStatus::INITGAME:
-			InitWindow(gameStats.screenWidth, gameStats.screenHeight, "PongOso");
+			// set up our window and a few resources we need
+			slWindow(400, 400, "CrabOut", false);
 			InitPlayer(player1, player1.initPlayer1PosX,gameStats.gameManager);
 			InitPlayer(player2, player2.initPlayer2PosX, gameStats.gameManager);
 			InitBall(ball);
