@@ -43,7 +43,6 @@ namespace crabOut
 			// set up our window and a few resources we need
 			slWindow(400, 400, "CrabOut", false);
 			InitPlayer(player1, player1.initPlayer1PosX,gameStats.gameManager);
-			InitPlayer(player2, player2.initPlayer2PosX, gameStats.gameManager);
 			InitBall(ball, gameStats.screenWidth, gameStats.screenHeight);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 			break;
