@@ -6,15 +6,15 @@ namespace crabOut
 	{
 		//default stats for player
 		int winScore = 3;
-		int playerRecWidth = 10;
-		int playerRecHeight = 100;
-		float initPlayerPosX = 380;
-		float initPlayerPosY = 10;
+		int playerRecWidth = 100;
+		int playerRecHeight = 10;
+		float initPlayerPosX = 400;
+		float initPlayerPosY = 20;
 
 		//rojo
-		player.playerColor.r = 255;
-		player.playerColor.g= 51;
-		player.playerColor.b = 51;
+		player.playerColor.r = 1.0;
+		player.playerColor.g= 0.3;
+		player.playerColor.b = 0.1;
 
 		if (initGame == SceneStatus::INITGAME || player.gameEnd)
 		{
@@ -24,22 +24,22 @@ namespace crabOut
 		}
 
 		player.playerVel = 300.0f;
-		player.playerRec.recPos.x = initPlayerPosX - (playerRecWidth / 2);
+		player.playerRec.recPos.x = initPlayerPosX;
 		player.playerRec.recPos.y = initPlayerPosY;
 		player.playerRec.recSize.x = playerRecWidth;
 		player.playerRec.recSize.y = playerRecHeight;
 	}
 
-	void UpdatePlayer(Player& player, int key1, int key2)
+	void UpdatePlayer(Player& player)
 	{
 		//movimiento 
-		//arriba
-		if (key1)
+		//izquierda
+		if (slGetKey('A'))
 		{
 			player.playerRec.recPos.x -= player.playerVel * slGetDeltaTime();
 		}
-		//abajo
-		if (key2)
+		//derecha
+		if (slGetKey('D'))
 		{
 			player.playerRec.recPos.x += player.playerVel * slGetDeltaTime();
 		}
@@ -47,11 +47,11 @@ namespace crabOut
 
 	void DrawPlayer(Player player)
 	{
-		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, 10);
+		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, 1.0);
 		slRectangleFill(player.playerRec.recPos.x, player.playerRec.recPos.y,
-			player.playerRec.recSize.y, player.playerRec.recSize.x);
+			player.playerRec.recSize.x, player.playerRec.recSize.y);
 	}
-
+	 
 	void CheckPlayerPoints(int player1Points, SceneStatus& gameStatus)
 	{
  		int winScore = 3;
@@ -61,15 +61,15 @@ namespace crabOut
 			gameStatus = SceneStatus::GAMEEND;
 		}
 	}
-	void CheckPlayerColisionArena(Player& player, int screenHeight)
+	void CheckPlayerColisionArena(Player& player, int screenWidth)
 	{
-		if (player.playerRec.recPos.x <= 0)
+		if (player.playerRec.recPos.x - player.playerRec.recSize.x /2 <= 0)
 		{
-			player.playerRec.recPos.x = 0;
+			player.playerRec.recPos.x =0 + player.playerRec.recSize.x /2;
 		}
-		if (player.playerRec.recPos.x + player.playerRec.recSize.x >= screenHeight)
+		if (player.playerRec.recPos.x + player.playerRec.recSize.x/2 >= screenWidth)
 		{
-			player.playerRec.recSize.x = screenHeight - player.playerRec.recSize.x;
+			player.playerRec.recPos.x = screenWidth - player.playerRec.recSize.x /2;
 		}
 	}
 }
