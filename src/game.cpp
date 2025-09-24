@@ -23,9 +23,6 @@ namespace crabOut
 		{
 			Update(player1, gameStats, ball);
 
-			// background glow
-			//slSetForeColor(0.1, 0.9, 0.2, 0.4);
-
 			Draw(player1, ball, gameStats);
 			// draw everything
 			slRender();
@@ -42,8 +39,8 @@ namespace crabOut
 		case SceneStatus::INITGAME:
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
-			InitPlayer(player1, player1.initPlayer1PosX,gameStats.gameManager);
-			InitBall(ball, gameStats.screenWidth, gameStats.screenHeight);
+			InitPlayer(player1, gameStats.gameManager);
+			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 			break;
 		default:
@@ -55,39 +52,38 @@ namespace crabOut
 	{
 		switch ((SceneStatus)gameStats.gameManager)
 		{
-		case SceneStatus::GAMEPLAYTWOPLAYERS:
+		case SceneStatus::GAMEPLAY:
 
 			bool ballIsHitP1;
-			bool ballIsHitP2;
 
-			if (slGetKey(SL_KEY_ENTER) && gameStats.gameManager == SceneStatus::GAMEPLAYTWOPLAYERS)
+			if (slGetKey(SL_KEY_ENTER) && gameStats.gameManager == SceneStatus::GAMEPLAY)
 			{
 				gameStats.gameManager = SceneStatus::GAMEPAUSE;
 			}
 
-			if (gameStats.gameManager == SceneStatus::GAMEPLAYTWOPLAYERS)
+			if (gameStats.gameManager == SceneStatus::GAMEPLAY)
 			{
-				UpdatePlayer(player1, slGetKey('a'), slGetKey('d'));
-				CheckPlayerColisionArena(player1, gameStats.screenHeight);
-				CheckCollisionBallArena(ball, player1.playerPoints, gameStats.gameManager, gameStats.screenWidth, gameStats.screenHeight);
+				UpdatePlayer(player1);
+				CheckPlayerColisionArena(player1, gameStats.screenWidth);
+				CheckCollisionBallArena(ball, player1.playerPoints, gameStats.gameManager, gameStats);
 				ballIsHitP1 = CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckPlayerPoints(player1.playerPoints, gameStats.gameManager);
-				UpdateBall(ball);
+				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
 			break;
 
 		case SceneStatus::GAMEPAUSE:
 
-			if (slGetKey('p')|| slGetKey('P') && gameStats.gameManager == SceneStatus::GAMEPAUSE)
+			if (slGetKey('P') && gameStats.gameManager == SceneStatus::GAMEPAUSE)
 			{
-				gameStats.gameManager = SceneStatus::GAMEPLAYTWOPLAYERS;
+				gameStats.gameManager = SceneStatus::GAMEPLAY;
 			}
 			break;
 
 		case SceneStatus::RESETGAME:
 
-			InitPlayer(player1, player1.initPlayer1PosX, gameStats.gameManager);
-			InitBall(ball, gameStats.screenWidth, gameStats.screenHeight);
+			InitPlayer(player1, gameStats.gameManager);
+			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 			break;
 
@@ -108,7 +104,6 @@ namespace crabOut
 	void Draw(Player player1, Ball& ball, Pong& gameStats)
 	{
 		int auxPosXPlayer1 = 200;
-		int auxPosXPlayer2 = 570;
 
 		switch ((SceneStatus)gameStats.gameManager)
 		{
@@ -122,8 +117,8 @@ namespace crabOut
 			//PrintRules();
 			//PrintCredits();
 			break;
-	
-		case SceneStatus::GAMEPLAYTWOPLAYERS:
+
+		case SceneStatus::GAMEPLAY:
 
 			//PrintScore(player1.playerPoints, auxPosXPlayer1);
 			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
