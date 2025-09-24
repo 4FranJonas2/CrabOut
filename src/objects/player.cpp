@@ -2,13 +2,14 @@
 
 namespace crabOut
 {
-	void InitPlayer(Player& player, float initPlayerPosY, SceneStatus initGame)
+	void InitPlayer(Player& player, SceneStatus initGame)
 	{
 		//default stats for player
 		int winScore = 3;
-		int playerRecWidth = 15;
+		int playerRecWidth = 10;
 		int playerRecHeight = 100;
-		float initPlayerPosX = 225;
+		float initPlayerPosX = 380;
+		float initPlayerPosY = 10;
 
 		//rojo
 		player.playerColor.r = 255;
@@ -24,7 +25,7 @@ namespace crabOut
 
 		player.playerVel = 300.0f;
 		player.playerRec.recPos.x = initPlayerPosX - (playerRecWidth / 2);
-		player.playerRec.recPos.y = initPlayerPosY ;
+		player.playerRec.recPos.y = initPlayerPosY;
 		player.playerRec.recSize.x = playerRecWidth;
 		player.playerRec.recSize.y = playerRecHeight;
 	}
