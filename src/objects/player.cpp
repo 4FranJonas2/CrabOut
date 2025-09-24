@@ -46,9 +46,9 @@ namespace crabOut
 
 	void DrawPlayer(Player player)
 	{
-		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, 0);
+		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, 10);
 		slRectangleFill(player.playerRec.recPos.x, player.playerRec.recPos.y,
-			player.playerRec.recSize.x, player.playerRec.recSize.y);
+			player.playerRec.recSize.y, player.playerRec.recSize.x);
 	}
 
 	void CheckPlayerPoints(int player1Points, SceneStatus& gameStatus)
