@@ -22,8 +22,6 @@ namespace crabOut
 
 	struct Ball
 	{
-		
-
 		Vector2 ballSize;
 		Vector2 ballSpeed;
 		Circle ballCircle;
@@ -32,10 +30,10 @@ namespace crabOut
 		int frameCounter;
 	};
 
-	void InitBall(Ball& ball, int screenWidth, int screenHeight);
-	void UpdateBall(Ball& ball);
+	void InitBall(Ball& ball);
+	void UpdateBall(Ball& ball, Pong gameStatus, int playerPosX, int playerPosY);
 	bool CheckCollisionBallPlayer(Ball& ball, Rectangle playerRec);
-	void CheckCollisionBallArena(Ball& ball, int& player1Points, SceneStatus& resetPoint, int screenWidth, int screenHeight);
+	void CheckCollisionBallArena(Ball& ball, int& player1Points, SceneStatus& resetPoint, Pong gameStats);
 	void DrawBall(Ball& ball);
 }
 
