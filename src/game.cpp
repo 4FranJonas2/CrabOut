@@ -22,11 +22,11 @@ namespace crabOut
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
 			Update(player1, gameStats, ball);
-			Draw(player1, ball, gameStats);
 
 			// background glow
-			slSetForeColor(0.1, 0.9, 0.2, 0.4);
+			//slSetForeColor(0.1, 0.9, 0.2, 0.4);
 
+			Draw(player1, ball, gameStats);
 			// draw everything
 			slRender();
 		}
@@ -41,7 +41,7 @@ namespace crabOut
 		{
 		case SceneStatus::INITGAME:
 			// set up our window and a few resources we need
-			slWindow(400, 400, "CrabOut", false);
+			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 			InitPlayer(player1, player1.initPlayer1PosX,gameStats.gameManager);
 			InitBall(ball, gameStats.screenWidth, gameStats.screenHeight);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
