@@ -45,10 +45,10 @@ namespace crabOut
 	// revote preciso sin polares====
 	bool CheckCollisionBallPlayer(Ball& ball, Rectangle playerRec)
 	{
-		float left = playerRec.recPos.x - playerRec.recSize.x * 0.5f;
-		float right = playerRec.recPos.x + playerRec.recSize.x * 0.5f;
-		float top = playerRec.recPos.y - playerRec.recSize.y * 0.5f;
-		float bottom = playerRec.recPos.y + playerRec.recSize.y * 0.5f;
+		float left = playerRec.recPos.x - playerRec.recSize.x /2;
+		float right = playerRec.recPos.x + playerRec.recSize.x /2;
+		float top = playerRec.recPos.y - playerRec.recSize.y /2;
+		float bottom = playerRec.recPos.y + playerRec.recSize.y /2;
 
 		if (ball.ballCircle.pos.x + ball.ballCircle.rad >= left &&
 			ball.ballCircle.pos.x - ball.ballCircle.rad <= right &&
@@ -78,10 +78,9 @@ namespace crabOut
 				ball.ballSpeed.y *= -1;
 
 				float relativeIntersectX = (ball.ballCircle.pos.x - playerRec.recPos.x);
-				float normalized = relativeIntersectX / (playerRec.recSize.x * 0.5f);
+				float normalized = relativeIntersectX / (playerRec.recSize.x /2);
 
-				float speed = sqrt(ball.ballSpeed.x * ball.ballSpeed.x +
-					ball.ballSpeed.y * ball.ballSpeed.y);
+				float speed = sqrt(ball.ballSpeed.x * ball.ballSpeed.x + ball.ballSpeed.y * ball.ballSpeed.y);
 
 				ball.ballSpeed.x = normalized * speed;
 				ball.ballSpeed.y = -sqrt(speed * speed - ball.ballSpeed.x * ball.ballSpeed.x);
@@ -97,51 +96,6 @@ namespace crabOut
 
 		return false;
 	}
-
-	//revote normal====
-	//bool CheckCollisionBallPlayer(Ball& ball, Rectangle playerRec)
-	//{
-	//	float left = playerRec.recPos.x - playerRec.recSize.x * 0.5f;
-	//	float right = playerRec.recPos.x + playerRec.recSize.x * 0.5f;
-	//	float top = playerRec.recPos.y - playerRec.recSize.y * 0.5f;
-	//	float bottom = playerRec.recPos.y + playerRec.recSize.y * 0.5f;
-
-	//	if (ball.ballCircle.pos.x + ball.ballCircle.rad >= left &&
-	//		ball.ballCircle.pos.x - ball.ballCircle.rad <= right &&
-	//		ball.ballCircle.pos.y + ball.ballCircle.rad >= top &&
-	//		ball.ballCircle.pos.y - ball.ballCircle.rad <= bottom)
-	//	{
-	//		// Distancias de penetración en cada lado
-	//		float overlapLeft = fabs((ball.ballCircle.pos.x + ball.ballCircle.rad) - left);
-	//		float overlapRight = fabs(right - (ball.ballCircle.pos.x - ball.ballCircle.rad));
-	//		float overlapTop = fabs((ball.ballCircle.pos.y + ball.ballCircle.rad) - top);
-	//		float overlapBottom = fabs(bottom - (ball.ballCircle.pos.y - ball.ballCircle.rad));
-
-	//		// Encontramos el eje de menor penetración
-	//		float minOverlap = std::min({ overlapLeft, overlapRight, overlapTop, overlapBottom });
-
-	//		if (minOverlap == overlapLeft) {
-	//			ball.ballCircle.pos.x = left - ball.ballCircle.rad;
-	//			ball.ballSpeed.x *= -1;
-	//		}
-	//		else if (minOverlap == overlapRight) {
-	//			ball.ballCircle.pos.x = right + ball.ballCircle.rad;
-	//			ball.ballSpeed.x *= -1;
-	//		}
-	//		else if (minOverlap == overlapTop) {
-	//			ball.ballCircle.pos.y = top - ball.ballCircle.rad;
-	//			ball.ballSpeed.y *= -1;
-	//		}
-	//		else if (minOverlap == overlapBottom) {
-	//			ball.ballCircle.pos.y = bottom + ball.ballCircle.rad;
-	//			ball.ballSpeed.y *= -1;
-	//		}
-
-	//		return true;
-	//	}
-
-	//	return false;
-	//}
 
 	void CheckCollisionBallArena(Ball& ball, int& player1Points, SceneStatus& resetPoint, Pong gameStats)
 	{
