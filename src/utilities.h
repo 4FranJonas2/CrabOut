@@ -34,7 +34,7 @@ namespace crabOut
 	struct Pong
 	{
 		SceneStatus gameManager;
-		const int screenWidth = 800;
-		const int screenHeight = 450;
+		const int screenWidth = 750;
+		const int screenHeight = 650;
 	};
 }
