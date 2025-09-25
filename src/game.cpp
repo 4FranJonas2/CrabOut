@@ -8,6 +8,8 @@ using namespace std;
 
 namespace crabOut
 {
+	const int maxBricks = 30;
+
 	void GamePlay()
 	{
 		srand(time(nullptr));
@@ -15,15 +17,17 @@ namespace crabOut
 		Player player1;
 		Ball ball;
 
+		Brick bricks[maxBricks];
+
 		gameStats.gameManager = SceneStatus::INITGAME;
 
-		Init(player1, ball, gameStats);
+		Init(player1, ball, gameStats, bricks);
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
-			Update(player1, gameStats, ball);
+			Update(player1, gameStats, ball, bricks);
 
-			Draw(player1, ball, gameStats);
+			Draw(player1, ball, gameStats, bricks);
 			// draw everything
 			slRender();
 		}
@@ -32,7 +36,7 @@ namespace crabOut
 		slClose();
 	}
 
-	void Init(Player& player1, Ball& ball, Pong& gameStats)
+	void Init(Player& player1, Ball& ball, Pong& gameStats, Brick gameBrick[])
 	{
 		switch ((SceneStatus)gameStats.gameManager)
 		{
@@ -40,6 +44,7 @@ namespace crabOut
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 			InitPlayer(player1, gameStats.gameManager);
+			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 			break;
@@ -48,7 +53,7 @@ namespace crabOut
 		}
 	}
 
-	void Update(Player& player1, Pong& gameStats, Ball& ball)
+	void Update(Player& player1, Pong& gameStats, Ball& ball, Brick gameBrick[])
 	{
 		switch ((SceneStatus)gameStats.gameManager)
 		{
@@ -83,6 +88,7 @@ namespace crabOut
 		case SceneStatus::RESETGAME:
 
 			InitPlayer(player1, gameStats.gameManager);
+			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 			break;
@@ -101,27 +107,17 @@ namespace crabOut
 		}
 	}
 
-	void Draw(Player player1, Ball& ball, Pong& gameStats)
+	void Draw(Player player1, Ball& ball, Pong& gameStats, Brick gameBrick[])
 	{
 		int auxPosXPlayer1 = 200;
 
 		switch ((SceneStatus)gameStats.gameManager)
 		{
-		case SceneStatus::INITGAME:
-
-			//PrintScore(player1.playerPoints, auxPosXPlayer1);
-			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
-			DrawPlayer(player1);
-			DrawBall(ball);
-			//PrintPause();
-			//PrintRules();
-			//PrintCredits();
-			break;
-
 		case SceneStatus::GAMEPLAY:
 
 			//PrintScore(player1.playerPoints, auxPosXPlayer1);
 			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
+			DrawBrick(gameBrick, maxBricks);
 			DrawPlayer(player1);
 			DrawBall(ball);
 			break;
@@ -130,6 +126,7 @@ namespace crabOut
 
 			//PrintScore(player1.playerPoints, auxPosXPlayer1);
 			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
+			DrawBrick(gameBrick, maxBricks);
 			DrawPlayer(player1);
 			DrawBall(ball);
 			//PrintPause();
