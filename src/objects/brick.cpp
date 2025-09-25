@@ -44,13 +44,14 @@ namespace crabOut
 		}
 	}
 
-	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks)
+	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints)
 	{
 		for (int i = 0; i < maxBriks; i++)
 		{
 			//si ladrillo tiene vidas lo analizo
 			if (gameBricks[i].brickLives > 0)
 			{
+
 				float left = gameBricks[i].brickRec.recPos.x - gameBricks[i].brickRec.recSize.x / 2;
 				float right = gameBricks[i].brickRec.recPos.x + gameBricks[i].brickRec.recSize.x / 2;
 				float top = gameBricks[i].brickRec.recPos.y - gameBricks[i].brickRec.recSize.y / 2;
@@ -73,57 +74,54 @@ namespace crabOut
 						ball.ballCircle.pos.x = left - ball.ballCircle.rad;
 						ball.ballSpeed.x *= -1;
 
-						gameBricks[i].brickLives--;
-						gameBricks[i].gotHit = true;
+						UpdateBrick(gameBricks, i);
 					}
 					else if (minOverlap == overlapRight)
 					{
 						ball.ballCircle.pos.x = right + ball.ballCircle.rad;
 						ball.ballSpeed.x *= -1;
 
-						gameBricks[i].brickLives--;
-						gameBricks[i].gotHit = true;
+						UpdateBrick(gameBricks, i);
 					}
 					else if (minOverlap == overlapTop)
 					{
 						ball.ballCircle.pos.y = top - ball.ballCircle.rad;
 						ball.ballSpeed.y *= -1;
 
-						gameBricks[i].brickLives--;
-						gameBricks[i].gotHit = true;
-
-						/*float relativeIntersectX = (ball.ballCircle.pos.x - gameBricks[i].brickRec.recPos.x);
-						float normalized = relativeIntersectX / (gameBricks[i].brickRec.recSize.x / 2);
-
-						float speed = sqrt(ball.ballSpeed.x * ball.ballSpeed.x + ball.ballSpeed.y * ball.ballSpeed.y);
-
-						ball.ballSpeed.x = normalized * speed;
-						ball.ballSpeed.y = -sqrt(speed * speed - ball.ballSpeed.x * ball.ballSpeed.x);*/
+						UpdateBrick(gameBricks, i);
 					}
 					else if (minOverlap == overlapBottom)
 					{
 						ball.ballCircle.pos.y = bottom + ball.ballCircle.rad;
 						ball.ballSpeed.y *= -1;
 
-						gameBricks[i].brickLives--;
-						gameBricks[i].gotHit = true;
+						UpdateBrick(gameBricks, i);
 					}
 				}
 
-			}
-			//si no tiene vidas lo opaco y declaro muerto
-			else if (gameBricks[i].brickLives == 0)
-			{
-				gameBricks[i].isBrickActive = false;
-				gameBricks[i].brickColor.a -= 0.0;
 			}
 			//si es golpeado se opaca mas y mas 
 			if (gameBricks[i].gotHit == true)
 			{
 				gameBricks[i].gotHit = false;
-				gameBricks[i].brickColor.a -= 0.2;
+				gameBricks[i].brickColor.a -= 0.3;
+			}
+			//si no tiene vidas lo opaco y declaro muerto
+			if (gameBricks[i].brickLives == 0)
+			{
+				gameBricks[i].isBrickActive = false;
+				gameBricks[i].brickColor.r = 0.0;
+				gameBricks[i].brickColor.g = 0.0;
+				gameBricks[i].brickColor.b = 0.0;
+				gameBricks[i].brickColor.a = 0.0;
 			}
 		}
+	}
+
+	void UpdateBrick(Brick brick[], int index)
+	{
+		brick[index].brickLives--;
+		brick[index].gotHit = true;
 	}
 
 	void DrawBrick(Brick gameBricks[], int maxBricks)
