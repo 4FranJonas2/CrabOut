@@ -72,6 +72,7 @@ namespace crabOut
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
 				CheckCollisionBallArena(ball, player1.playerPoints, gameStats.gameManager, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
+				CheckBrickBallStatus(ball, gameBrick, maxBricks);
 				CheckPlayerPoints(player1.playerPoints, gameStats.gameManager);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
