@@ -66,7 +66,7 @@ namespace crabOut
 				UpdatePlayer(player1);
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
 				CheckCollisionBallArena(ball, player1.playerPoints, gameStats.gameManager, gameStats);
-				ballIsHitP1 = CheckCollisionBallPlayer(ball, player1.playerRec);
+				CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckPlayerPoints(player1.playerPoints, gameStats.gameManager);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
