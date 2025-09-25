@@ -2,6 +2,10 @@
 
 #include "sl.h"
 
+#include <cmath>
+#include <algorithm>
+
+#include "ball.h"
 #include "../utilities.h"
 
 namespace crabOut
@@ -18,6 +22,7 @@ namespace crabOut
 	};
 
 	void InitBrick(Brick gameBricks[], int maxBricks, Pong gameStats);
+	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks);
 	//void UpdatePlayer();
 	//void CheckPlayerPoints();
 	//void CheckBrickBallCollision();

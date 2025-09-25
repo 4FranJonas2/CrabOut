@@ -4,14 +4,14 @@ namespace crabOut
 {
 	void InitBrick(Brick gameBricks[], int maxBricks, Pong gameStats)
 	{
-		int cols = 6;              
-		int rows = 5;        
-		int brickWidth = 70; 
+		int cols = 6;
+		int rows = 5;
+		int brickWidth = 70;
 		int brickHeight = 30;
-		int auxSpaceX = 30;  
-		int auxSpaceY = 20;  
-		int startPosX = 130; 
-		int startPosY = 550; 
+		int auxSpaceX = 30;
+		int auxSpaceY = 20;
+		int startPosX = 130;
+		int startPosY = 550;
 
 		int brickCounter = 0;
 
@@ -19,10 +19,10 @@ namespace crabOut
 		{
 			for (int col = 0; col < cols; col++)
 			{
-				if (brickCounter >= maxBricks) 
+				if (brickCounter >= maxBricks)
 				{
 					break;
-				} 
+				}
 
 				gameBricks[brickCounter].brickRec.recSize.x = brickWidth;
 				gameBricks[brickCounter].brickRec.recSize.y = brickHeight;
@@ -33,8 +33,95 @@ namespace crabOut
 				gameBricks[brickCounter].brickColor.r = 0.6;
 				gameBricks[brickCounter].brickColor.g = 0.3;
 				gameBricks[brickCounter].brickColor.b = 0.3;
+				gameBricks[brickCounter].brickColor.a = 1.0;
+
+				gameBricks[brickCounter].brickLives = 3;
+				gameBricks[brickCounter].isBrickActive = true;
+				gameBricks[brickCounter].gotHit = false;
 
 				brickCounter++;
+			}
+		}
+	}
+
+	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks)
+	{
+		for (int i = 0; i < maxBriks; i++)
+		{
+			//si ladrillo tiene vidas lo analizo
+			if (gameBricks[i].brickLives > 0)
+			{
+				float left = gameBricks[i].brickRec.recPos.x - gameBricks[i].brickRec.recSize.x / 2;
+				float right = gameBricks[i].brickRec.recPos.x + gameBricks[i].brickRec.recSize.x / 2;
+				float top = gameBricks[i].brickRec.recPos.y - gameBricks[i].brickRec.recSize.y / 2;
+				float bottom = gameBricks[i].brickRec.recPos.y + gameBricks[i].brickRec.recSize.y / 2;
+
+				if (ball.ballCircle.pos.x + ball.ballCircle.rad >= left &&
+					ball.ballCircle.pos.x - ball.ballCircle.rad <= right &&
+					ball.ballCircle.pos.y + ball.ballCircle.rad >= top &&
+					ball.ballCircle.pos.y - ball.ballCircle.rad <= bottom)
+				{
+					float overlapLeft = fabs((ball.ballCircle.pos.x + ball.ballCircle.rad) - left);
+					float overlapRight = fabs(right - (ball.ballCircle.pos.x - ball.ballCircle.rad));
+					float overlapTop = fabs((ball.ballCircle.pos.y + ball.ballCircle.rad) - top);
+					float overlapBottom = fabs(bottom - (ball.ballCircle.pos.y - ball.ballCircle.rad));
+
+					float minOverlap = std::min({ overlapLeft, overlapRight, overlapTop, overlapBottom });
+
+					if (minOverlap == overlapLeft)
+					{
+						ball.ballCircle.pos.x = left - ball.ballCircle.rad;
+						ball.ballSpeed.x *= -1;
+
+						gameBricks[i].brickLives--;
+						gameBricks[i].gotHit = true;
+					}
+					else if (minOverlap == overlapRight)
+					{
+						ball.ballCircle.pos.x = right + ball.ballCircle.rad;
+						ball.ballSpeed.x *= -1;
+
+						gameBricks[i].brickLives--;
+						gameBricks[i].gotHit = true;
+					}
+					else if (minOverlap == overlapTop)
+					{
+						ball.ballCircle.pos.y = top - ball.ballCircle.rad;
+						ball.ballSpeed.y *= -1;
+
+						gameBricks[i].brickLives--;
+						gameBricks[i].gotHit = true;
+
+						/*float relativeIntersectX = (ball.ballCircle.pos.x - gameBricks[i].brickRec.recPos.x);
+						float normalized = relativeIntersectX / (gameBricks[i].brickRec.recSize.x / 2);
+
+						float speed = sqrt(ball.ballSpeed.x * ball.ballSpeed.x + ball.ballSpeed.y * ball.ballSpeed.y);
+
+						ball.ballSpeed.x = normalized * speed;
+						ball.ballSpeed.y = -sqrt(speed * speed - ball.ballSpeed.x * ball.ballSpeed.x);*/
+					}
+					else if (minOverlap == overlapBottom)
+					{
+						ball.ballCircle.pos.y = bottom + ball.ballCircle.rad;
+						ball.ballSpeed.y *= -1;
+
+						gameBricks[i].brickLives--;
+						gameBricks[i].gotHit = true;
+					}
+				}
+
+			}
+			//si no tiene vidas lo opaco y declaro muerto
+			else if (gameBricks[i].brickLives == 0)
+			{
+				gameBricks[i].isBrickActive = false;
+				gameBricks[i].brickColor.a -= 0.0;
+			}
+			//si es golpeado se opaca mas y mas 
+			if (gameBricks[i].gotHit == true)
+			{
+				gameBricks[i].gotHit = false;
+				gameBricks[i].brickColor.a -= 0.2;
 			}
 		}
 	}
@@ -43,7 +130,7 @@ namespace crabOut
 	{
 		for (int i = 0; i < maxBricks; i++)
 		{
-			slSetForeColor(gameBricks[i].brickColor.r, gameBricks[i].brickColor.g, gameBricks[i].brickColor.b, 1.0);
+			slSetForeColor(gameBricks[i].brickColor.r, gameBricks[i].brickColor.g, gameBricks[i].brickColor.b, gameBricks[i].brickColor.a);
 			slRectangleFill(gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
 				gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
 		}
