@@ -5,7 +5,7 @@ namespace crabOut
 	void InitPlayer(Player& player, SceneStatus initGame)
 	{
 		//default stats for player
-		int winScore = 3;
+		int lives = 3;
 		int playerRecWidth = 100;
 		int playerRecHeight = 20;
 		float initPlayerPosX = 400;
@@ -19,7 +19,7 @@ namespace crabOut
 
 		if (initGame == SceneStatus::INITGAME || player.gameEnd)
 		{
-			player.playerLives = 3;
+			player.playerLives = lives;
 			player.playerPoints = 0;
 			player.gameEnd = false;
 		}
@@ -62,6 +62,32 @@ namespace crabOut
 		if (player.playerRec.recPos.x + player.playerRec.recSize.x/2 >= screenWidth)
 		{
 			player.playerRec.recPos.x = screenWidth - player.playerRec.recSize.x /2;
+		}
+	}
+
+	bool IsPlayerAlive(Player player)
+	{
+		if (player.playerLives == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	bool HasPlayerReachMaxPoints(Player player)
+	{
+		int maxPoints = 900;
+
+		if (player.playerPoints == maxPoints)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
 		}
 	}
 
