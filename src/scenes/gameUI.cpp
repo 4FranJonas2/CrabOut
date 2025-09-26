@@ -24,7 +24,7 @@ namespace crabOut
 
 	void PrintPause(GameStats gameStats)
 	{
-		float lineText1PosX = gameStats.screenWidth / 2 - 100.0;
+		float lineText1PosX = gameStats.screenWidth / 2 - 90.0;
 		float LineText1PosY = 400.0;
 
 		float LineText2PosX = gameStats.screenWidth / 2 - 135.0;
@@ -33,13 +33,38 @@ namespace crabOut
 		float LineText3PosX = gameStats.screenWidth / 2 - 100.0;
 		float LineText3PosY = 270.0;
 
-		string pauseText = "GAME PAUSE";
-		string keyInstructionText = "Press ENTER key";
-		string continueText = "To Continue";
+		if (gameStats.gameStatus == SceneStatus::GAMEPAUSE || gameStats.gameStatus == SceneStatus::FIRSTGAME)
+		{
+			string pauseText = "GAME PAUSE";
+			string keyInstructionText = "Press ENTER key";
 
-		PrintText(lineText1PosX, LineText1PosY, pauseText);
-		PrintText(LineText2PosX, LineText2PosY, keyInstructionText);
-		PrintText(LineText3PosX, LineText3PosY, continueText);
+			PrintText(lineText1PosX, LineText1PosY, pauseText);  
+			PrintText(LineText2PosX, LineText2PosY, keyInstructionText);
+
+			if (gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			{
+				string continueText = "To Continue";
+				PrintText(LineText3PosX, LineText3PosY, continueText);
+			}
+			if (gameStats.gameStatus == SceneStatus::FIRSTGAME)
+			{
+				int auxXPos = 15.0;
+				string startText = "To Start Game";
+				PrintText(LineText3PosX - auxXPos, LineText3PosY, startText);
+			}
+		}
+
+		if (gameStats.gameStatus == SceneStatus::GAMEEND)
+		{
+			string endText = "GAME ENDED";
+			string keyInstructionText = "Press ENTER key";
+			string restartText = "To RESTART";
+
+			PrintText(lineText1PosX, LineText1PosY, endText);
+			PrintText(LineText2PosX, LineText2PosY, keyInstructionText);
+			PrintText(LineText3PosX, LineText3PosY, restartText);
+		}
+
 	}
 
 	void PrintText(float posX, float posY, string text)
