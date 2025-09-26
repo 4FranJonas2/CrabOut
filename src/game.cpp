@@ -57,7 +57,7 @@ namespace crabOut
 			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
 
-			gameStats.gameStatus = SceneStatus::GAMEPAUSE;
+			gameStats.gameStatus = SceneStatus::FIRSTGAME;
 
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, 14);
@@ -73,29 +73,47 @@ namespace crabOut
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
+		case SceneStatus::FIRSTGAME:
+
+			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::FIRSTGAME)
+			{
+				gameStats.gameStatus = SceneStatus::GAMEPLAY;
+			}
+
+			if (gameStats.gameStatus == SceneStatus::FIRSTGAME)
+			{
+				CheckPlayerColisionArena(player1, gameStats.screenWidth);
+				//CheckCollisionBallPlayer(ball, player1.playerRec);
+				UpdatePlayer(player1);
+				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
+			}
+			break;
+
 		case SceneStatus::GAMEPLAY:
 
 			bool ballIsHitP1;
 
-			if (!slGetKey(SL_KEY_ENTER))
+			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			}
 
-			
-				UpdatePlayer(player1);
+
+			if (gameStats.gameStatus == SceneStatus::GAMEPLAY)
+			{
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
 				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameStatus, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
 				CheckPlayerWinStatus(player1, gameStats.gameStatus);
+				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
-			
+			}
 			break;
 
 		case SceneStatus::GAMEPAUSE:
 
-			if (!slGetKey(SL_KEY_ENTER))
+			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPLAY;
 			}
@@ -129,6 +147,14 @@ namespace crabOut
 
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
+		case SceneStatus::FIRSTGAME:
+			PrintScore(player1.playerPoints, gameStats);
+			PrintLives(player1.playerLives, gameStats);
+			DrawBrick(gameBrick, maxBricks);
+			DrawPlayer(player1);
+			DrawBall(ball);
+			break;
+
 		case SceneStatus::GAMEPLAY:
 
 			PrintScore(player1.playerPoints, gameStats);
