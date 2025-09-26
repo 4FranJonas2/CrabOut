@@ -46,11 +46,9 @@ namespace crabOut
 		}
 	}
 	 
-	void CheckPlayerPoints(int player1Points, SceneStatus& gameStatus)
+	void CheckPlayerWinStatus(Player player, SceneStatus& gameStatus)
 	{
- 		int winScore = 3;
-		
-		if (player1Points >= winScore)
+		if (player.playerLives == 0)
 		{
 			gameStatus = SceneStatus::GAMEEND;
 		}

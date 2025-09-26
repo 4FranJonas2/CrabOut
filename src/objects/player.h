@@ -21,7 +21,7 @@ namespace crabOut
 
 	void InitPlayer(Player& player, SceneStatus initGame);
 	void UpdatePlayer(Player& player);
-	void CheckPlayerPoints(int playerpoints, SceneStatus& gameStatus);
+	void CheckPlayerWinStatus(Player player, SceneStatus& gameStatus);
 	void CheckPlayerColisionArena(Player& player, int screenHeight);
 	void DrawPlayer(Player player);
 }
