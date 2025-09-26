@@ -29,7 +29,8 @@ namespace crabOut
 		GAMEPLAY,
 		GAMEPAUSE,
 		RESETGAME,
-		GAMEEND
+		GAMEEND,
+		SIMEND
 	};
 
 	struct Pong
