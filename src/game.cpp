@@ -2,6 +2,11 @@
 
 #include "sl.h"
 
+#include "objects/player.h"
+#include "objects/ball.h"
+#include "scenes/gameUI.h"
+#include "objects/brick.h"
+
 #include <iostream>
 
 using namespace std;
@@ -9,19 +14,19 @@ using namespace std;
 namespace crabOut
 {
 	const int maxBricks = 30;
-	
-	//int font = slLoadFont("dogicapixel.ttf");
+	Pong gameStats;
+	Player player1;
+	Ball ball;
+	Brick bricks[maxBricks];
 
-	void GamePlay()
+	void Init(Player& player1, Ball& ball, Pong& gameStats, Brick brick[]);
+	void Update(Player& player1, Pong& gameStats, Ball& ball, Brick brick[]);
+	void Draw(Player player1, Ball& ball, Pong& gameStats, Brick brick[]);
+	void DeInit(Pong& gameStats);
+
+	void RunGame()
 	{
 		srand(time(nullptr));
-		Pong gameStats;
-		Player player1;
-		Ball ball;
-
-		Brick bricks[maxBricks];
-
-
 		gameStats.gameManager = SceneStatus::INITGAME;
 
 		Init(player1, ball, gameStats, bricks);
@@ -48,12 +53,14 @@ namespace crabOut
 		{
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
+
 			InitPlayer(player1, gameStats.gameManager);
 			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 
-			//slSetFont(font, 14);
+			int font = slLoadFont("res/dogicapixel.ttf");
+			slSetFont(font, 14);
 
 		}
 			break;
@@ -82,7 +89,7 @@ namespace crabOut
 				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameManager, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
-				CheckPlayerPoints(player1.playerPoints, gameStats.gameManager);
+				CheckPlayerWinStatus(player1, gameStats.gameManager);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
 			break;
