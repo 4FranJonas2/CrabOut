@@ -1,38 +1,52 @@
 #include "gameUI.h"
-
+//iankuz
 using namespace std;
 
 namespace crabOut
 {
 	Colors white = { 1.0f,1.0f,1.0f,1.0f };
-	
+
 	void PrintScore(int playerScore, GameStats gameStats)
 	{
 		float textPosX = 15.0;
-		float textPosY = gameStats.screenHeight-20.0;
+		float textPosY = gameStats.screenHeight - 30.0;
 		string scoreText = "Score: " + to_string(playerScore);
-		slSetForeColor(white.r, white.g, white.b,white.a);
-		slText(textPosX, textPosY, scoreText.c_str());
+		PrintText(textPosX, textPosY, scoreText);
 	}
 
 	void PrintLives(int playerLives, GameStats gameStats)
 	{
-		float textPosX = gameStats.screenWidth - 100.0;
-		float textPosY = gameStats.screenHeight - 20.0;
-		slSetForeColor(white.r, white.g, white.b, white.a);
-		string scoreText = "Lives: " + to_string(playerLives);
-		slText(textPosX, textPosY, scoreText.c_str());
+		float textPosX = gameStats.screenWidth - 160.0;
+		float textPosY = gameStats.screenHeight - 30.0;
+		string livesText = "Lives: " + to_string(playerLives);
+		PrintText(textPosX, textPosY, livesText);
 	}
 
-	/*void PrintPause()
+	void PrintPause(GameStats gameStats)
 	{
-		int textFont = 30;
-		Color textColor = WHITE;
+		float lineText1PosX = gameStats.screenWidth / 2 - 30.0;
+		float LineText1PosY = 200.0;
 
-		DrawText("GAME PAUSE", 305, 50, textFont, textColor);
-		DrawText("Press P key", 265, 300, textFont, textColor);
-		DrawText("To Continue", 310, 350, textFont, textColor);
-	}*/
+		float LineText2PosX = gameStats.screenWidth / 2 - 30.0;
+		float LineText2PosY = 220.0;
+
+		float LineText3PosX = gameStats.screenWidth / 2 - 30.0;
+		float LineText3PosY = 240.0;
+
+		string pauseText = "GAME PAUSE";
+		string keyInstructionText = "Press ENTER key";
+		string continueText = "To Continue";
+
+		PrintText(lineText1PosX, LineText1PosY, pauseText);
+		PrintText(lineText1PosX, LineText1PosY, keyInstructionText);
+		PrintText(lineText1PosX, LineText1PosY, continueText);
+	}
+
+	void PrintText(float posX, float posY, string text)
+	{
+		slSetForeColor(white.r, white.g, white.b, white.a);
+		slText(posX, posY, text.c_str());
+	}
 
 	/*void PrintEndMatchMsg(int player1Score, int player2Score, SceneStatus& gameScene)
 	{
