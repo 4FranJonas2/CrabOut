@@ -22,10 +22,8 @@ namespace crabOut
 		bool gotHit;
 	};
 
-	void InitBrick(Brick gameBricks[], int maxBricks, GameStats gameStats);
+	void InitBrick(Brick gameBricks[], int maxBricks, GameStats gameStats, bool gameEnd);
 	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints);
 	void UpdateBrick(Brick brick[], int index, int& playerPoints);
-	//void CheckPlayerPoints();
-	//void CheckBrickBallCollision();
 	void DrawBrick(Brick gameBricks[], int maxBricks, GameStats gameStats);
 }

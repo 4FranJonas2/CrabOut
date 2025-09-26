@@ -2,7 +2,7 @@
 
 namespace crabOut
 {
-	void InitBrick(Brick gameBricks[], int maxBricks, GameStats gameStats)
+	void InitBrick(Brick gameBricks[], int maxBricks, GameStats gameStats, bool gameEnd)
 	{
 		int cols = 6;
 		int rows = 5;
@@ -12,7 +12,6 @@ namespace crabOut
 		int auxSpaceY = 20;
 		int startPosX = 130;
 		int startPosY = 550;
-
 		int brickCounter = 0;
 
 		for (int row = 0; row < rows; row++)
@@ -30,7 +29,7 @@ namespace crabOut
 				gameBricks[brickCounter].brickRec.recPos.x = startPosX + col * (brickWidth + auxSpaceX);
 				gameBricks[brickCounter].brickRec.recPos.y = startPosY - row * (brickHeight + auxSpaceY);
 
-				if (gameStats.gameStatus == SceneStatus::INITGAME)
+				if (gameStats.gameStatus == SceneStatus::INITGAME || gameEnd == true)
 				{
 					gameBricks[brickCounter].brickColor.r = 0.6;
 					gameBricks[brickCounter].brickColor.g = 0.3;
