@@ -7,14 +7,15 @@ namespace crabOut
 		//default stats for player
 		int winScore = 3;
 		int playerRecWidth = 100;
-		int playerRecHeight = 10;
+		int playerRecHeight = 20;
 		float initPlayerPosX = 400;
-		float initPlayerPosY = 20;
+		float initPlayerPosY = 15;
 
 		//rojo
 		player.playerColor.r = 1.0;
 		player.playerColor.g= 0.3;
 		player.playerColor.b = 0.1;
+		player.playerColor.a = 1.0;
 
 		if (initGame == SceneStatus::INITGAME || player.gameEnd)
 		{
@@ -44,13 +45,6 @@ namespace crabOut
 			player.playerRec.recPos.x += player.playerVel * slGetDeltaTime();
 		}
 	}
-
-	void DrawPlayer(Player player)
-	{
-		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, 1.0);
-		slRectangleFill(player.playerRec.recPos.x, player.playerRec.recPos.y,
-			player.playerRec.recSize.x, player.playerRec.recSize.y);
-	}
 	 
 	void CheckPlayerPoints(int player1Points, SceneStatus& gameStatus)
 	{
@@ -71,5 +65,12 @@ namespace crabOut
 		{
 			player.playerRec.recPos.x = screenWidth - player.playerRec.recSize.x /2;
 		}
+	}
+
+	void DrawPlayer(Player player)
+	{
+		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, player.playerColor.a);
+		slRectangleFill(player.playerRec.recPos.x, player.playerRec.recPos.y,
+			player.playerRec.recSize.x, player.playerRec.recSize.y);
 	}
 }
