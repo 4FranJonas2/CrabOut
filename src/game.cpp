@@ -9,6 +9,8 @@ using namespace std;
 namespace crabOut
 {
 	const int maxBricks = 30;
+	
+	//int font = slLoadFont("dogicapixel.ttf");
 
 	void GamePlay()
 	{
@@ -18,6 +20,7 @@ namespace crabOut
 		Ball ball;
 
 		Brick bricks[maxBricks];
+
 
 		gameStats.gameManager = SceneStatus::INITGAME;
 
@@ -38,9 +41,11 @@ namespace crabOut
 
 	void Init(Player& player1, Ball& ball, Pong& gameStats, Brick gameBrick[])
 	{
+
 		switch ((SceneStatus)gameStats.gameManager)
 		{
 		case SceneStatus::INITGAME:
+		{
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 			InitPlayer(player1, gameStats.gameManager);
@@ -48,6 +53,9 @@ namespace crabOut
 			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
 
+			//slSetFont(font, 14);
+
+		}
 			break;
 		default:
 			break;
