@@ -24,6 +24,11 @@ namespace crabOut
 	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[]);
 	static void DeInit(GameStats& gameStats);
 
+	bool enterIsPressed = false;
+	bool enterWasPressed = false;
+	
+		
+
 	void RunGame()
 	{
 		srand(time(nullptr));
@@ -33,6 +38,9 @@ namespace crabOut
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
+			enterWasPressed = enterIsPressed;
+			enterIsPressed = slGetKey(SL_KEY_ENTER); // space
+
 			Update(player1, gameStats, ball, bricks);
 
 			Draw(player1, ball, gameStats, bricks);
@@ -88,7 +96,7 @@ namespace crabOut
 
 		case SceneStatus::GAMEPLAY:
 			
-			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPLAY)
+			if (!enterWasPressed && enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			}
@@ -108,7 +116,7 @@ namespace crabOut
 
 		case SceneStatus::GAMEPAUSE:
 
-			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			if (!enterWasPressed && enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPLAY;
 			}
@@ -143,7 +151,8 @@ namespace crabOut
 		case SceneStatus::FIRSTGAME:
 			PrintScore(player1.playerPoints, gameStats);
 			PrintLives(player1.playerLives, gameStats);
-			DrawBrick(gameBrick, maxBricks);
+			DrawBrick(gameBrick, maxBricks, gameStats);
+			PrintPause(gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
 			break;
@@ -152,7 +161,7 @@ namespace crabOut
 
 			PrintScore(player1.playerPoints, gameStats);
 			PrintLives(player1.playerLives, gameStats);
-			DrawBrick(gameBrick, maxBricks);
+			DrawBrick(gameBrick, maxBricks,gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
 			break;
@@ -161,7 +170,7 @@ namespace crabOut
 
 			PrintScore(player1.playerPoints, gameStats);
 			PrintLives(player1.playerLives, gameStats);
-			DrawBrick(gameBrick, maxBricks);
+			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
 			PrintPause(gameStats);
