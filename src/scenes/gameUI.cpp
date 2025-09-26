@@ -1,23 +1,26 @@
 #include "gameUI.h"
 
+using namespace std;
 
 namespace crabOut
 {
-	void PrintScore(int playerScore, Pong gameStats)
+	Colors white = { 1.0f,1.0f,1.0f,1.0f };
+	
+	void PrintScore(int playerScore, GameStats gameStats)
 	{
-		float textPosX = gameStats.screenWidth-690.0;
+		float textPosX = 15.0;
 		float textPosY = gameStats.screenHeight-20.0;
-		std::string scoreText = "Score: " + std::to_string(playerScore);
-		slSetForeColor(0.5, 0.5, 0.5, 1.0);
-		slText(300.0, 300.0, "scoreText.c_str()");
+		string scoreText = "Score: " + to_string(playerScore);
+		slSetForeColor(white.r, white.g, white.b,white.a);
+		slText(textPosX, textPosY, scoreText.c_str());
 	}
 
-	void PrintLives(int playerLives, Pong gameStats)
+	void PrintLives(int playerLives, GameStats gameStats)
 	{
-		float textPosX = gameStats.screenWidth - 50.0;
+		float textPosX = gameStats.screenWidth - 100.0;
 		float textPosY = gameStats.screenHeight - 20.0;
-		slSetForeColor(0.5, 0.5, 0.5, 1.0);
-		std::string scoreText = "Lives: " + std::to_string(playerLives);
+		slSetForeColor(white.r, white.g, white.b, white.a);
+		string scoreText = "Lives: " + to_string(playerLives);
 		slText(textPosX, textPosY, scoreText.c_str());
 	}
 
