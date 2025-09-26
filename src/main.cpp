@@ -2,7 +2,7 @@
 
 int main()
 {
-	crabOut::GamePlay();
+	crabOut::RunGame();
 
 	return 0;
 }
