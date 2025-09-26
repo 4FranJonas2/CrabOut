@@ -24,22 +24,22 @@ namespace crabOut
 
 	void PrintPause(GameStats gameStats)
 	{
-		float lineText1PosX = gameStats.screenWidth / 2 - 30.0;
-		float LineText1PosY = 200.0;
+		float lineText1PosX = gameStats.screenWidth / 2 - 100.0;
+		float LineText1PosY = 400.0;
 
-		float LineText2PosX = gameStats.screenWidth / 2 - 30.0;
-		float LineText2PosY = 220.0;
+		float LineText2PosX = gameStats.screenWidth / 2 - 135.0;
+		float LineText2PosY = 310.0;
 
-		float LineText3PosX = gameStats.screenWidth / 2 - 30.0;
-		float LineText3PosY = 240.0;
+		float LineText3PosX = gameStats.screenWidth / 2 - 100.0;
+		float LineText3PosY = 270.0;
 
 		string pauseText = "GAME PAUSE";
 		string keyInstructionText = "Press ENTER key";
 		string continueText = "To Continue";
 
 		PrintText(lineText1PosX, LineText1PosY, pauseText);
-		PrintText(lineText1PosX, LineText1PosY, keyInstructionText);
-		PrintText(lineText1PosX, LineText1PosY, continueText);
+		PrintText(LineText2PosX, LineText2PosY, keyInstructionText);
+		PrintText(LineText3PosX, LineText3PosY, continueText);
 	}
 
 	void PrintText(float posX, float posY, string text)
