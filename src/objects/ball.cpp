@@ -7,22 +7,29 @@
 
 namespace crabOut
 {
+	float PI = 3.141;
+
 	void InitBall(Ball& ball)
 	{
 		ball.ballCircle.rad = 10.0f;
+
+		#define DEG2RAD (3.14 / 180.0f)
 
 		float initBallPosX = 400.0;
 		float initBallPosY = 36.0;
 
 		Vector2 ballPosition = { initBallPosX, initBallPosY };
-		Vector2 ballSped = {350.0f, 350.0f };
+		Vector2 ballSped = {550.0f, 550.0f };
 
 		//color naranja 
 		ball.ballColor.r = 0.9;
 		ball.ballColor.g = 0.5;
 		ball.ballColor.b = 0.1;
 
-		ball.ballSpeed = ballSped;
+		float angle = (rand() % 240) * DEG2RAD;
+		ball.ballSpeed.x = cosf(angle) * ballSped.x;
+		ball.ballSpeed.y = sinf(angle) * ballSped.y;
+		
 		ball.ballCircle.pos.x = ballPosition.x;
 		ball.ballCircle.pos.y = ballPosition.y;
 		ball.frameCounter = 0;
@@ -83,10 +90,15 @@ namespace crabOut
 				float relativeIntersectX = (ball.ballCircle.pos.x - playerRec.recPos.x);
 				float normalized = relativeIntersectX / (playerRec.recSize.x /2);
 
+				float exitAng = 60.0;
+
+				float maxAngle = exitAng * PI / 180.0f;
+				float bounceAngle = normalized * maxAngle;
+
 				float speed = sqrt(ball.ballSpeed.x * ball.ballSpeed.x + ball.ballSpeed.y * ball.ballSpeed.y);
 
-				ball.ballSpeed.x = normalized * speed;
-				ball.ballSpeed.y = -sqrt(speed * speed - ball.ballSpeed.x * ball.ballSpeed.x);
+				ball.ballSpeed.x = speed * sinf(bounceAngle);
+				ball.ballSpeed.y = -speed * cosf(bounceAngle);
 			}
 			else if (minOverlap == overlapBottom) 
 			{
@@ -100,7 +112,7 @@ namespace crabOut
 		return false;
 	}
 
-	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, GameStats& gameStats)
+	void CheckCollisionBallArena(Ball& ball, int& playerLives, GameStats& gameStats)
 	{
 		//chequeo de rebote con los bordes de la arena
 		//rebote derecho e izquierdo bas abajo
