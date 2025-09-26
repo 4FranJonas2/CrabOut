@@ -97,7 +97,7 @@ namespace crabOut
 		return false;
 	}
 
-	void CheckCollisionBallArena(Ball& ball, int& player1Points, SceneStatus& resetPoint, Pong gameStats)
+	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, Pong gameStats)
 	{
 		//chequeo de rebote con los bordes de la arena
 		//rebote derecho e izquierdo bas abajo
@@ -117,7 +117,7 @@ namespace crabOut
 			ball.ballSpeed.x *= -1.0f;
 		}
 
-		//rebote inferior y superior
+		//rebote superior y inferior
 		if (ball.ballCircle.pos.y >= (gameStats.screenHeight - ball.ballCircle.rad))
 		{
 			ball.ballCircle.pos.y = (gameStats.screenHeight - ball.ballCircle.rad);
@@ -127,6 +127,7 @@ namespace crabOut
 		{
 			ball.ballCircle.pos.y = ball.ballCircle.rad;
 			ball.ballSpeed.y *= -1.0f;
+			playerLives--;
 		}
 	}
 
