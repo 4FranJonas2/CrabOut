@@ -74,28 +74,28 @@ namespace crabOut
 						ball.ballCircle.pos.x = left - ball.ballCircle.rad;
 						ball.ballSpeed.x *= -1;
 
-						UpdateBrick(gameBricks, i);
+						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 					else if (minOverlap == overlapRight)
 					{
 						ball.ballCircle.pos.x = right + ball.ballCircle.rad;
 						ball.ballSpeed.x *= -1;
 
-						UpdateBrick(gameBricks, i);
+						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 					else if (minOverlap == overlapTop)
 					{
 						ball.ballCircle.pos.y = top - ball.ballCircle.rad;
 						ball.ballSpeed.y *= -1;
 
-						UpdateBrick(gameBricks, i);
+						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 					else if (minOverlap == overlapBottom)
 					{
 						ball.ballCircle.pos.y = bottom + ball.ballCircle.rad;
 						ball.ballSpeed.y *= -1;
 
-						UpdateBrick(gameBricks, i);
+						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 				}
 
@@ -118,7 +118,7 @@ namespace crabOut
 		}
 	}
 
-	void UpdateBrick(Brick brick[], int index)
+	void UpdateBrick(Brick brick[], int index, int& playerPoints)
 	{
 		brick[index].brickLives--;
 		brick[index].gotHit = true;

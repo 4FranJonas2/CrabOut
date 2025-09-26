@@ -23,7 +23,7 @@ namespace crabOut
 
 	void InitBrick(Brick gameBricks[], int maxBricks, Pong gameStats);
 	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints);
-	void UpdateBrick(Brick brick[], int index);
+	void UpdateBrick(Brick brick[], int index, int& playerPoints);
 	//void CheckPlayerPoints();
 	//void CheckBrickBallCollision();
 	void DrawBrick(Brick gameBricks[], int maxBricks);
