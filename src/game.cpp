@@ -19,10 +19,10 @@ namespace crabOut
 	Ball ball;
 	Brick bricks[maxBricks];
 
-	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[]);
-	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[]);
-	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[]);
-	void DeInit(GameStats& gameStats);
+	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[]);
+	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[]);
+	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[]);
+	static void DeInit(GameStats& gameStats);
 
 	void RunGame()
 	{
@@ -90,9 +90,7 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEPLAY:
-
-			bool ballIsHitP1;
-
+			
 			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
