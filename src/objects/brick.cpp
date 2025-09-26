@@ -2,7 +2,7 @@
 
 namespace crabOut
 {
-	void InitBrick(Brick gameBricks[], int maxBricks, Pong gameStats)
+	void InitBrick(Brick gameBricks[], int maxBricks, GameStats gameStats)
 	{
 		int cols = 6;
 		int rows = 5;
@@ -122,6 +122,7 @@ namespace crabOut
 	{
 		brick[index].brickLives--;
 		brick[index].gotHit = true;
+		playerPoints += 10;
 	}
 
 	void DrawBrick(Brick gameBricks[], int maxBricks)

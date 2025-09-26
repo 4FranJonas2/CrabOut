@@ -14,20 +14,20 @@ using namespace std;
 namespace crabOut
 {
 	const int maxBricks = 30;
-	Pong gameStats;
+	GameStats gameStats;
 	Player player1;
 	Ball ball;
 	Brick bricks[maxBricks];
 
-	void Init(Player& player1, Ball& ball, Pong& gameStats, Brick brick[]);
-	void Update(Player& player1, Pong& gameStats, Ball& ball, Brick brick[]);
-	void Draw(Player player1, Ball& ball, Pong& gameStats, Brick brick[]);
-	void DeInit(Pong& gameStats);
+	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[]);
+	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[]);
+	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[]);
+	void DeInit(GameStats& gameStats);
 
 	void RunGame()
 	{
 		srand(time(nullptr));
-		gameStats.gameManager = SceneStatus::INITGAME;
+		gameStats.gameStatus = SceneStatus::INITGAME;
 
 		Init(player1, ball, gameStats, bricks);
 
@@ -44,20 +44,20 @@ namespace crabOut
 		slClose();
 	}
 
-	void Init(Player& player1, Ball& ball, Pong& gameStats, Brick gameBrick[])
+	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[])
 	{
 
-		switch ((SceneStatus)gameStats.gameManager)
+		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::INITGAME:
 		{
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 
-			InitPlayer(player1, gameStats.gameManager);
+			InitPlayer(player1, gameStats.gameStatus);
 			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
-			gameStats.gameManager = SceneStatus::GAMEPAUSE;
+			gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, 14);
@@ -69,52 +69,52 @@ namespace crabOut
 		}
 	}
 
-	void Update(Player& player1, Pong& gameStats, Ball& ball, Brick gameBrick[])
+	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[])
 	{
-		switch ((SceneStatus)gameStats.gameManager)
+		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::GAMEPLAY:
 
 			bool ballIsHitP1;
 
-			if (slGetKey(SL_KEY_ENTER) && gameStats.gameManager == SceneStatus::GAMEPLAY)
+			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
-				gameStats.gameManager = SceneStatus::GAMEPAUSE;
+				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			}
 
-			if (gameStats.gameManager == SceneStatus::GAMEPLAY)
+			if (gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				UpdatePlayer(player1);
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
-				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameManager, gameStats);
+				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameStatus, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
-				CheckPlayerWinStatus(player1, gameStats.gameManager);
+				CheckPlayerWinStatus(player1, gameStats.gameStatus);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
 			break;
 
 		case SceneStatus::GAMEPAUSE:
 
-			if (slGetKey('P') && gameStats.gameManager == SceneStatus::GAMEPAUSE)
+			if (slGetKey('P') && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
 			{
-				gameStats.gameManager = SceneStatus::GAMEPLAY;
+				gameStats.gameStatus = SceneStatus::GAMEPLAY;
 			}
 			break;
 
 		case SceneStatus::RESETGAME:
 
-			InitPlayer(player1, gameStats.gameManager);
+			InitPlayer(player1, gameStats.gameStatus);
 			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
-			gameStats.gameManager = SceneStatus::GAMEPAUSE;
+			gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			break;
 
 		case SceneStatus::GAMEEND:
 
 			if (slGetKey(SL_KEY_ENTER))
 			{
-				gameStats.gameManager = SceneStatus::RESETGAME;
+				gameStats.gameStatus = SceneStatus::RESETGAME;
 				player1.gameEnd = true;
 			}
 			break;
@@ -124,11 +124,11 @@ namespace crabOut
 		}
 	}
 
-	void Draw(Player player1, Ball& ball, Pong& gameStats, Brick gameBrick[])
+	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[])
 	{
 		int auxPosXPlayer1 = 200;
 
-		switch ((SceneStatus)gameStats.gameManager)
+		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::GAMEPLAY:
 
@@ -165,9 +165,9 @@ namespace crabOut
 		}
 	}
 
-	void DeInit(Pong& gameStats)
+	void DeInit(GameStats& gameStats)
 	{
-		switch ((SceneStatus)gameStats.gameManager)
+		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::SIMEND:
 

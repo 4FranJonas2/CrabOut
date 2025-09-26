@@ -33,9 +33,9 @@ namespace crabOut
 		SIMEND
 	};
 
-	struct Pong
+	struct GameStats
 	{
-		SceneStatus gameManager;
+		SceneStatus gameStatus;
 		const int screenWidth = 750;
 		const int screenHeight = 650;
 	};

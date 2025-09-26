@@ -31,9 +31,9 @@ namespace crabOut
 	};
 
 	void InitBall(Ball& ball);
-	void UpdateBall(Ball& ball, Pong gameStatus, int playerPosX, int playerPosY);
+	void UpdateBall(Ball& ball, GameStats gameStatus, int playerPosX, int playerPosY);
 	bool CheckCollisionBallPlayer(Ball& ball, Rectangle playerRec);
-	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, Pong gameStats);
+	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, GameStats gameStats);
 	void DrawBall(Ball& ball);
 }
 

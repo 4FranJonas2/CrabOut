@@ -28,9 +28,9 @@ namespace crabOut
 		ball.frameCounter = 0;
 	}
 
-	void UpdateBall(Ball& ball, Pong gameStatus, int playerPosX, int playerPosY)
+	void UpdateBall(Ball& ball, GameStats gameStatus, int playerPosX, int playerPosY)
 	{	
-		if (gameStatus.gameManager == SceneStatus::GAMEPAUSE)
+		if (gameStatus.gameStatus == SceneStatus::GAMEPAUSE)
 		{
 			ball.ballCircle.pos.x = playerPosX;
 			ball.ballCircle.pos.y = playerPosY;
@@ -97,7 +97,7 @@ namespace crabOut
 		return false;
 	}
 
-	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, Pong gameStats)
+	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, GameStats gameStats)
 	{
 		//chequeo de rebote con los bordes de la arena
 		//rebote derecho e izquierdo bas abajo
