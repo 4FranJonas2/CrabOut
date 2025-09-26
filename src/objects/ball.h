@@ -33,7 +33,7 @@ namespace crabOut
 	void InitBall(Ball& ball);
 	void UpdateBall(Ball& ball, GameStats gameStatus, int playerPosX, int playerPosY);
 	bool CheckCollisionBallPlayer(Ball& ball, Rectangle playerRec);
-	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, GameStats& gameStats);
+	void CheckCollisionBallArena(Ball& ball, int& playerLives, GameStats& gameStats);
 	void DrawBall(Ball& ball);
 }
 
