@@ -100,7 +100,7 @@ namespace crabOut
 		return false;
 	}
 
-	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, GameStats gameStats)
+	void CheckCollisionBallArena(Ball& ball, int& playerLives, SceneStatus& resetPoint, GameStats& gameStats)
 	{
 		//chequeo de rebote con los bordes de la arena
 		//rebote derecho e izquierdo bas abajo
@@ -125,7 +125,10 @@ namespace crabOut
 		{
 			ball.ballCircle.pos.y = ball.ballCircle.rad;
 			ball.ballSpeed.y *= -1.0f;
+
 			playerLives--;
+
+			gameStats.gameStatus = SceneStatus::RESETGAME;
 		}
 	}
 
