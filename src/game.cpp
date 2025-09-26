@@ -27,8 +27,6 @@ namespace crabOut
 	bool enterIsPressed = false;
 	bool enterWasPressed = false;
 	
-		
-
 	void RunGame()
 	{
 		srand(time(nullptr));
@@ -39,7 +37,7 @@ namespace crabOut
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
 			enterWasPressed = enterIsPressed;
-			enterIsPressed = slGetKey(SL_KEY_ENTER); // space
+			enterIsPressed = slGetKey(SL_KEY_ENTER);
 
 			Update(player1, gameStats, ball, bricks);
 
@@ -60,16 +58,15 @@ namespace crabOut
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 
 			InitPlayer(player1, gameStats.gameStatus);
-			InitBrick(gameBrick, maxBricks, gameStats);
+			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
-
-			gameStats.gameStatus = SceneStatus::FIRSTGAME;
 
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, 25);
-
+			gameStats.gameStatus = SceneStatus::FIRSTGAME;
 		}
 			break;
+
 		default:
 			break;
 		}
@@ -101,16 +98,24 @@ namespace crabOut
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			}
 
-
 			if (gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
-				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameStatus, gameStats);
+				CheckCollisionBallArena(ball, player1.playerLives, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
 				CheckPlayerWinStatus(player1, gameStats.gameStatus);
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
+
+				if (!IsPlayerAlive(player1))
+				{
+					gameStats.gameStatus = SceneStatus::GAMEEND;
+				}
+				if (!HasPlayerReachMaxPoints(player1))
+				{
+					gameStats.gameStatus = SceneStatus::GAMEEND;
+				}
 			}
 			break;
 
@@ -124,9 +129,10 @@ namespace crabOut
 
 		case SceneStatus::RESETGAME:
 
-			InitPlayer(player1, gameStats.gameStatus);
-			InitBrick(gameBrick, maxBricks, gameStats);
+			player1.gameEnd = true;
+			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
+			InitPlayer(player1, gameStats.gameStatus);
 			gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			break;
 
@@ -135,7 +141,6 @@ namespace crabOut
 			if (slGetKey(SL_KEY_ENTER))
 			{
 				gameStats.gameStatus = SceneStatus::RESETGAME;
-				player1.gameEnd = true;
 			}
 			break;
 
@@ -174,17 +179,16 @@ namespace crabOut
 			DrawPlayer(player1);
 			DrawBall(ball);
 			PrintPause(gameStats);
-			//PrintRules();
-			//PrintCredits();
 			break;
 
 		case SceneStatus::GAMEEND:
 
-			//PrintEndMatchMsg(player1.playerPoints, player2.playerPoints, gameStats.gameManager);
 			PrintScore(player1.playerPoints, gameStats);
 			PrintLives(player1.playerLives, gameStats);
+			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
+			PrintPause(gameStats);
 			break;
 
 		default:
