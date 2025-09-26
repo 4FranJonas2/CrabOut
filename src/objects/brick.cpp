@@ -30,14 +30,17 @@ namespace crabOut
 				gameBricks[brickCounter].brickRec.recPos.x = startPosX + col * (brickWidth + auxSpaceX);
 				gameBricks[brickCounter].brickRec.recPos.y = startPosY - row * (brickHeight + auxSpaceY);
 
-				gameBricks[brickCounter].brickColor.r = 0.6;
-				gameBricks[brickCounter].brickColor.g = 0.3;
-				gameBricks[brickCounter].brickColor.b = 0.3;
-				gameBricks[brickCounter].brickColor.a = 1.0;
+				if (gameStats.gameStatus == SceneStatus::INITGAME)
+				{
+					gameBricks[brickCounter].brickColor.r = 0.6;
+					gameBricks[brickCounter].brickColor.g = 0.3;
+					gameBricks[brickCounter].brickColor.b = 0.3;
+					gameBricks[brickCounter].brickColor.a = 1.0;
 
-				gameBricks[brickCounter].brickLives = 3;
-				gameBricks[brickCounter].isBrickActive = true;
-				gameBricks[brickCounter].gotHit = false;
+					gameBricks[brickCounter].brickLives = 3;
+					gameBricks[brickCounter].isBrickActive = true;
+					gameBricks[brickCounter].gotHit = false;
+				}
 
 				brickCounter++;
 			}
@@ -125,8 +128,13 @@ namespace crabOut
 		playerPoints += 10;
 	}
 
-	void DrawBrick(Brick gameBricks[], int maxBricks)
+	void DrawBrick(Brick gameBricks[], int maxBricks, GameStats gameStats)
 	{
+		if (true)
+		{
+
+		}
+
 		for (int i = 0; i < maxBricks; i++)
 		{
 			slSetForeColor(gameBricks[i].brickColor.r, gameBricks[i].brickColor.g, gameBricks[i].brickColor.b, gameBricks[i].brickColor.a);

@@ -17,6 +17,7 @@ namespace crabOut
 		Colors brickColor;
 		
 		int brickLives;
+		float auxBrickAlpha;
 		bool isBrickActive;
 		bool gotHit;
 	};
@@ -26,5 +27,5 @@ namespace crabOut
 	void UpdateBrick(Brick brick[], int index, int& playerPoints);
 	//void CheckPlayerPoints();
 	//void CheckBrickBallCollision();
-	void DrawBrick(Brick gameBricks[], int maxBricks);
+	void DrawBrick(Brick gameBricks[], int maxBricks, GameStats gameStats);
 }
