@@ -36,11 +36,9 @@ namespace crabOut
 			Update(player1, gameStats, ball, bricks);
 
 			Draw(player1, ball, gameStats, bricks);
-			// draw everything
+			
 			slRender();
 		}
-
-		// close the window and shut down SIGIL
 		slClose();
 	}
 
@@ -60,7 +58,7 @@ namespace crabOut
 			gameStats.gameStatus = SceneStatus::FIRSTGAME;
 
 			int font = slLoadFont("res/dogicapixel.ttf");
-			slSetFont(font, 14);
+			slSetFont(font, 25);
 
 		}
 			break;
@@ -83,7 +81,6 @@ namespace crabOut
 			if (gameStats.gameStatus == SceneStatus::FIRSTGAME)
 			{
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
-				//CheckCollisionBallPlayer(ball, player1.playerRec);
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
@@ -141,8 +138,6 @@ namespace crabOut
 
 	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[])
 	{
-		int auxPosXPlayer1 = 200;
-
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::FIRSTGAME:
@@ -169,7 +164,7 @@ namespace crabOut
 			DrawBrick(gameBrick, maxBricks);
 			DrawPlayer(player1);
 			DrawBall(ball);
-			//PrintPause();
+			PrintPause(gameStats);
 			//PrintRules();
 			//PrintCredits();
 			break;
