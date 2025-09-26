@@ -199,6 +199,7 @@
     <ClCompile Include="src\objects\brick.cpp" />
     <ClCompile Include="src\objects\player.cpp" />
     <ClCompile Include="src\scenes\gameUI.cpp" />
+    <ClCompile Include="src\scenes\menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="src\objects\brick.h" />
     <ClInclude Include="src\objects\player.h" />
     <ClInclude Include="src\scenes\gameUI.h" />
+    <ClInclude Include="src\scenes\menu.h" />
     <ClInclude Include="src\utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
