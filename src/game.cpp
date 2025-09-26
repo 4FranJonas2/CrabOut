@@ -47,6 +47,7 @@ namespace crabOut
 			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
 			gameStats.gameManager = SceneStatus::GAMEPAUSE;
+
 			break;
 		default:
 			break;
@@ -70,7 +71,7 @@ namespace crabOut
 			{
 				UpdatePlayer(player1);
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
-				CheckCollisionBallArena(ball, player1.playerPoints, gameStats.gameManager, gameStats);
+				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameManager, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
 				CheckPlayerPoints(player1.playerPoints, gameStats.gameManager);
@@ -116,8 +117,8 @@ namespace crabOut
 		{
 		case SceneStatus::GAMEPLAY:
 
-			//PrintScore(player1.playerPoints, auxPosXPlayer1);
-			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
+			PrintScore(player1.playerPoints, gameStats);
+			PrintLives(player1.playerLives, gameStats);
 			DrawBrick(gameBrick, maxBricks);
 			DrawPlayer(player1);
 			DrawBall(ball);
@@ -125,8 +126,8 @@ namespace crabOut
 
 		case SceneStatus::GAMEPAUSE:
 
-			//PrintScore(player1.playerPoints, auxPosXPlayer1);
-			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
+			PrintScore(player1.playerPoints, gameStats);
+			PrintLives(player1.playerLives, gameStats);
 			DrawBrick(gameBrick, maxBricks);
 			DrawPlayer(player1);
 			DrawBall(ball);
@@ -138,10 +139,24 @@ namespace crabOut
 		case SceneStatus::GAMEEND:
 
 			//PrintEndMatchMsg(player1.playerPoints, player2.playerPoints, gameStats.gameManager);
-			//PrintScore(player1.playerPoints, auxPosXPlayer1);
-			//PrintArena(gameStats.screenWidth, gameStats.screenHeight);
+			PrintScore(player1.playerPoints, gameStats);
+			PrintLives(player1.playerLives, gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	void DeInit(Pong& gameStats)
+	{
+		switch ((SceneStatus)gameStats.gameManager)
+		{
+		case SceneStatus::SIMEND:
+
+			
 			break;
 
 		default:

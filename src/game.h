@@ -11,4 +11,5 @@ namespace crabOut
 	void Init(Player& player1,Ball& ball, Pong& gameStats, Brick brick[]);
 	void Update(Player& player1, Pong& gameStats, Ball& ball, Brick brick[]);
 	void Draw(Player player1, Ball& ball, Pong& gameStats, Brick brick[]);
+	void DeInit(Pong& gameStats);
 }
