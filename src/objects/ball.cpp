@@ -7,13 +7,13 @@
 
 namespace crabOut
 {
-	BallDir ballDir;
-
 	void InitBall(Ball& ball)
 	{
 		ball.ballCircle.rad = 10.0f;
+
 		float initBallPosX = 400.0;
 		float initBallPosY = 36.0;
+
 		Vector2 ballPosition = { initBallPosX, initBallPosY };
 		Vector2 ballSped = {350.0f, 350.0f };
 
@@ -30,12 +30,15 @@ namespace crabOut
 
 	void UpdateBall(Ball& ball, GameStats gameStatus, int playerPosX, int playerPosY)
 	{	
-		if (gameStatus.gameStatus == SceneStatus::GAMEPAUSE)
+		int auxYPos = 22.0f;
+		
+		if (gameStatus.gameStatus == SceneStatus::GAMEPAUSE or gameStatus.gameStatus == SceneStatus::FIRSTGAME)
 		{
 			ball.ballCircle.pos.x = playerPosX;
-			ball.ballCircle.pos.y = playerPosY;
+			ball.ballCircle.pos.y = playerPosY + auxYPos;
 		}
-		else
+		
+		if (gameStatus.gameStatus == SceneStatus::GAMEPLAY)
 		{
 			ball.ballCircle.pos.x += ball.ballSpeed.x * slGetDeltaTime();
 			ball.ballCircle.pos.y += ball.ballSpeed.y * slGetDeltaTime();
@@ -105,11 +108,6 @@ namespace crabOut
 		{
 	 		ball.ballCircle.pos.x = gameStats.screenWidth - ball.ballCircle.rad;
 			ball.ballSpeed.x *= -1.0f;
-			/*player1Points++;
-			if (player1Points < winScore)
-			{
-				resetPoint = SceneStatus::RESETGAME;
-			}*/
 		}
 		else if (ball.ballCircle.pos.x <= (0 + ball.ballCircle.rad))
 		{
