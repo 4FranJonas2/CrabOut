@@ -25,6 +25,7 @@ namespace crabOut
 	enum class SceneStatus
 	{
 		INITGAME = 1,
+		FIRSTGAME,
 		GAMEMENU,
 		GAMEPLAY,
 		GAMEPAUSE,
