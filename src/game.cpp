@@ -46,7 +46,6 @@ namespace crabOut
 
 	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[])
 	{
-
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::INITGAME:
@@ -57,6 +56,7 @@ namespace crabOut
 			InitPlayer(player1, gameStats.gameStatus);
 			InitBrick(gameBrick, maxBricks, gameStats);
 			InitBall(ball);
+
 			gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 
 			int font = slLoadFont("res/dogicapixel.ttf");
@@ -77,13 +77,12 @@ namespace crabOut
 
 			bool ballIsHitP1;
 
-			if (slGetKey(SL_KEY_ENTER) && gameStats.gameStatus == SceneStatus::GAMEPLAY)
+			if (!slGetKey(SL_KEY_ENTER))
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			}
 
-			if (gameStats.gameStatus == SceneStatus::GAMEPLAY)
-			{
+			
 				UpdatePlayer(player1);
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
 				CheckCollisionBallArena(ball, player1.playerLives, gameStats.gameStatus, gameStats);
@@ -91,12 +90,12 @@ namespace crabOut
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
 				CheckPlayerWinStatus(player1, gameStats.gameStatus);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
-			}
+			
 			break;
 
 		case SceneStatus::GAMEPAUSE:
 
-			if (slGetKey('P') && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			if (!slGetKey(SL_KEY_ENTER))
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPLAY;
 			}
