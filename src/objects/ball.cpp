@@ -26,7 +26,7 @@ namespace crabOut
 		ball.ballColor.g = 0.5;
 		ball.ballColor.b = 0.1;
 
-		float angle = (rand() % 240) * DEG2RAD;
+		float angle = (rand() % 90) * DEG2RAD;
 		ball.ballSpeed.x = cosf(angle) * ballSped.x;
 		ball.ballSpeed.y = sinf(angle) * ballSped.y;
 		
