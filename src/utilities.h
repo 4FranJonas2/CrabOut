@@ -27,6 +27,8 @@ namespace crabOut
 		INITGAME = 1,
 		FIRSTGAME,
 		GAMEMENU,
+		GAMERULES,
+		GAMECREDITS,
 		GAMEPLAY,
 		GAMEPAUSE,
 		RESETGAME,
@@ -39,5 +41,6 @@ namespace crabOut
 		SceneStatus gameStatus;
 		const int screenWidth = 750;
 		const int screenHeight = 650;
+		int fontSize = 25;
 	};
 }
