@@ -6,6 +6,7 @@
 #include "objects/ball.h"
 #include "scenes/gameUI.h"
 #include "objects/brick.h"
+#include "scenes/menu.h"
 
 #include <iostream>
 
@@ -62,8 +63,8 @@ namespace crabOut
 			InitBall(ball);
 
 			int font = slLoadFont("res/dogicapixel.ttf");
-			slSetFont(font, 25);
-			gameStats.gameStatus = SceneStatus::FIRSTGAME;
+			slSetFont(font, gameStats.fontSize);
+			gameStats.gameStatus = SceneStatus::GAMERULES;
 		}
 			break;
 
@@ -160,6 +161,20 @@ namespace crabOut
 			PrintPause(gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
+			break;
+
+		case SceneStatus::GAMEMENU:
+		    DrawMainMenu( gameStats);
+
+			break;
+
+		case SceneStatus::GAMERULES:
+			DrawRulesMenu(gameStats);
+
+			break;
+
+		case SceneStatus::GAMECREDITS:
+			
 			break;
 
 		case SceneStatus::GAMEPLAY:
