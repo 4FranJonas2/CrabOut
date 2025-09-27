@@ -14,6 +14,7 @@ using namespace std;
 
 namespace crabOut
 {
+
 	const int maxBricks = 30;
 	GameStats gameStats;
 	Player player1;

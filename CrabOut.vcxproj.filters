@@ -36,7 +36,7 @@
     <ClCompile Include="src\scenes\menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="powerUp.cpp">
+    <ClCompile Include="src\objects\powerUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +62,7 @@
     <ClInclude Include="src\scenes\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="powerUp.h">
+    <ClInclude Include="src\objects\powerUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
