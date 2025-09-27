@@ -24,7 +24,7 @@ namespace crabOut
 			player.gameEnd = false;
 		}
 
-		player.playerVel = 300.0f;
+		player.playerVel = 390.0f;
 		player.playerRec.recPos.x = initPlayerPosX;
 		player.playerRec.recPos.y = initPlayerPosY;
 		player.playerRec.recSize.x = playerRecWidth;
