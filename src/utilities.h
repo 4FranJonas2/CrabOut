@@ -44,5 +44,7 @@ namespace crabOut
 		int fontSize = 25;
 		bool enterIsPressed = false;
 		bool enterWasPressed = false;
+		bool isResetMatch = false;
+		bool goMenu = false;
 	};
 }
