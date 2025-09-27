@@ -60,7 +60,7 @@ namespace crabOut
 
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, gameStats.fontSize);
-			gameStats.gameStatus = SceneStatus::GAMEMENU;
+			gameStats.gameStatus = SceneStatus::GAMEEND;
 		}
 			break;
 
