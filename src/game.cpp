@@ -89,6 +89,13 @@ namespace crabOut
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
+
+			if (slGetKey('M'))
+			{
+				gameStats.gameStatus = SceneStatus::RESETGAME;
+				player1.gameEnd = true;
+				gameStats.goMenu = true;
+			}
 			break;
 
 		case SceneStatus::GAMEMENU:
@@ -201,8 +208,7 @@ namespace crabOut
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::FIRSTGAME:
-			PrintScore(player1.playerPoints, gameStats);
-			PrintLives(player1.playerLives, gameStats);
+			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPause(gameStats);
 			DrawPlayer(player1);
@@ -224,18 +230,14 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEPLAY:
-
-			PrintScore(player1.playerPoints, gameStats);
-			PrintLives(player1.playerLives, gameStats);
+			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks,gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
 			break;
 
 		case SceneStatus::GAMEPAUSE:
-
-			PrintScore(player1.playerPoints, gameStats);
-			PrintLives(player1.playerLives, gameStats);
+			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
@@ -243,9 +245,7 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEEND:
-
-			PrintScore(player1.playerPoints, gameStats);
-			PrintLives(player1.playerLives, gameStats);
+			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
 			DrawBall(ball);
