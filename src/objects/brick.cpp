@@ -129,10 +129,10 @@ namespace crabOut
 
 	void DrawBrick(Brick gameBricks[], int maxBricks, GameStats gameStats)
 	{
-		if (true)
+		/*if (true)
 		{
 
-		}
+		}*/
 
 		for (int i = 0; i < maxBricks; i++)
 		{
