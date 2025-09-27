@@ -19,10 +19,11 @@ namespace crabOut
 	Player player1;
 	Ball ball;
 	Brick bricks[maxBricks];
+	MenuButtons buttons;
 
-	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[]);
-	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[]);
-	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[]);
+	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons& buttons);
+	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[], MenuButtons buttons);
+	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons buttons);
 	static void DeInit(GameStats& gameStats);
 
 	bool enterIsPressed = false;
@@ -33,23 +34,23 @@ namespace crabOut
 		srand(time(nullptr));
 		gameStats.gameStatus = SceneStatus::INITGAME;
 
-		Init(player1, ball, gameStats, bricks);
+		Init(player1, ball, gameStats, bricks, buttons);
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
 			enterWasPressed = enterIsPressed;
 			enterIsPressed = slGetKey(SL_KEY_ENTER);
 
-			Update(player1, gameStats, ball, bricks);
+			Update(player1, gameStats, ball, bricks, buttons);
 
-			Draw(player1, ball, gameStats, bricks);
+			Draw(player1, ball, gameStats, bricks, buttons);
 			
 			slRender();
 		}
 		slClose();
 	}
 
-	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[])
+	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons& buttons)
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
@@ -58,13 +59,14 @@ namespace crabOut
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 
+			InitButtons(buttons);
 			InitPlayer(player1, gameStats.gameStatus);
 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
 
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, gameStats.fontSize);
-			gameStats.gameStatus = SceneStatus::GAMERULES;
+			gameStats.gameStatus = SceneStatus::GAMECREDITS;
 		}
 			break;
 
@@ -73,7 +75,7 @@ namespace crabOut
 		}
 	}
 
-	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[])
+	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[], MenuButtons buttons)
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
@@ -90,6 +92,18 @@ namespace crabOut
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
 			}
+			break;
+
+		case SceneStatus::GAMEMENU:
+			UpdateSceneMenus(gameStats, buttons);
+			break;
+
+		case SceneStatus::GAMERULES:
+			UpdateSceneMenus(gameStats, buttons);
+			break;
+
+		case SceneStatus::GAMECREDITS:
+			UpdateSceneMenus(gameStats, buttons);
 			break;
 
 		case SceneStatus::GAMEPLAY:
@@ -150,7 +164,7 @@ namespace crabOut
 		}
 	}
 
-	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[])
+	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons buttons)
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
@@ -164,17 +178,17 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEMENU:
-		    DrawMainMenu( gameStats);
+		    DrawMainMenu( gameStats, buttons);
 
 			break;
 
 		case SceneStatus::GAMERULES:
-			DrawRulesMenu(gameStats);
+			DrawRulesMenu(gameStats, buttons);
 
 			break;
 
 		case SceneStatus::GAMECREDITS:
-			
+			DrawCreditsMenu(gameStats, buttons);
 			break;
 
 		case SceneStatus::GAMEPLAY:
