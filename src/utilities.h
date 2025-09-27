@@ -42,5 +42,7 @@ namespace crabOut
 		const int screenWidth = 750;
 		const int screenHeight = 650;
 		int fontSize = 25;
+		bool enterIsPressed = false;
+		bool enterWasPressed = false;
 	};
 }
