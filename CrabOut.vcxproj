@@ -193,6 +193,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="powerUp.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\ball.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="src\scenes\menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="powerUp.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\objects\ball.h" />
     <ClInclude Include="src\objects\brick.h" />
