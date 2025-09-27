@@ -17,7 +17,7 @@ namespace crabOut
 		player.playerColor.b = 0.1;
 		player.playerColor.a = 1.0;
 
-		if (initGame == SceneStatus::INITGAME || player.gameEnd)
+		if (initGame == SceneStatus::INITGAME || player.gameEnd || initGame == SceneStatus::FIRSTGAME)
 		{
 			player.playerLives = lives;
 			player.playerPoints = 0;
