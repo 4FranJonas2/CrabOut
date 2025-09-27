@@ -12,12 +12,12 @@ namespace crabOut
 		float livesTextPosY = gameStats.screenHeight - 30.0;
 		float scoreTextPosX = 15.0;
 		float scoreTextPosY = gameStats.screenHeight - 30.0;
-		float pauseTextPosX = 260.0;
+		float pauseTextPosX = 240.0;
 		float pauseTextPosY = gameStats.screenHeight - 20.0;
 
 		string livesText = "Lives: " + to_string(playerLives);
 		string scoreText = "Score: " + to_string(playerScore);
-		string pauseKeyText = "Press P to PAUSE game";
+		string pauseKeyText = "Press ENTER to PAUSE game";
 
 		slSetFontSize(15);
 		PrintText(pauseTextPosX, pauseTextPosY, pauseKeyText);
