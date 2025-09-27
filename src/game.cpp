@@ -26,9 +26,6 @@ namespace crabOut
 	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons buttons);
 	static void DeInit(GameStats& gameStats);
 
-	bool enterIsPressed = false;
-	bool enterWasPressed = false;
-	
 	void RunGame()
 	{
 		srand(time(nullptr));
@@ -38,8 +35,8 @@ namespace crabOut
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{
-			enterWasPressed = enterIsPressed;
-			enterIsPressed = slGetKey(SL_KEY_ENTER);
+			gameStats.enterWasPressed = gameStats.enterIsPressed;
+			gameStats.enterIsPressed = slGetKey(SL_KEY_ENTER);
 
 			Update(player1, gameStats, ball, bricks, buttons);
 
@@ -66,7 +63,7 @@ namespace crabOut
 
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, gameStats.fontSize);
-			gameStats.gameStatus = SceneStatus::GAMECREDITS;
+			gameStats.gameStatus = SceneStatus::GAMEMENU;
 		}
 			break;
 
@@ -108,7 +105,7 @@ namespace crabOut
 
 		case SceneStatus::GAMEPLAY:
 			
-			if (!enterWasPressed && enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPLAY)
+			if (!gameStats.enterWasPressed && gameStats.enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
 			}
@@ -136,7 +133,7 @@ namespace crabOut
 
 		case SceneStatus::GAMEPAUSE:
 
-			if (!enterWasPressed && enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			if (!gameStats.enterWasPressed && gameStats.enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPLAY;
 			}
@@ -144,7 +141,10 @@ namespace crabOut
 
 		case SceneStatus::RESETGAME:
 
-			player1.gameEnd = true;
+			if (player1.playerLives == 0 || player1.playerPoints == 900)
+			{
+				player1.gameEnd = true;
+			}
 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
 			InitPlayer(player1, gameStats.gameStatus);
