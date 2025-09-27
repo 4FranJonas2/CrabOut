@@ -28,6 +28,7 @@ namespace crabOut
 	void DrawMainMenu(GameStats gameStats, MenuButtons buttons);
 	void DrawRulesMenu(GameStats gameStats, MenuButtons buttons);
 	void DrawCreditsMenu(GameStats gameStats, MenuButtons buttons);
+	void DrawPause(GameStats gameStats);
 	void DrawButtonRec(Rectangle button);
 
 }

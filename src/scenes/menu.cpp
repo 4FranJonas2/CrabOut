@@ -241,6 +241,60 @@ namespace crabOut
 
 	}
 
+	void DrawPause(GameStats gameStats)
+	{
+		if (gameStats.gameStatus == SceneStatus::GAMEPAUSE || gameStats.gameStatus == SceneStatus::FIRSTGAME)
+		{
+			float lineText1PosX = gameStats.screenWidth / 2 - 90.0;
+			float LineText1PosY = 400.0;
+
+			float LineText2PosX = gameStats.screenWidth / 2 - 135.0;
+			float LineText2PosY = 310.0;
+
+			float LineText3PosX = gameStats.screenWidth / 2 - 100.0;
+			float LineText3PosY = 270.0;
+
+			string pauseText = "GAME PAUSE";
+			string keyInstructionText = "Press ENTER key";
+
+			PrintMenuText(lineText1PosX, LineText1PosY, pauseText);
+			PrintMenuText(LineText2PosX, LineText2PosY, keyInstructionText);
+
+			if (gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			{
+				string continueText = "To Continue";
+				PrintMenuText(LineText3PosX, LineText3PosY, continueText);
+			}
+			if (gameStats.gameStatus == SceneStatus::FIRSTGAME)
+			{
+				int auxXPos = 15.0;
+				string startText = "To Start Game";
+				PrintMenuText(LineText3PosX - auxXPos, LineText3PosY, startText);
+			}
+		}
+
+		if (gameStats.gameStatus == SceneStatus::GAMEEND)
+		{
+			float lineText1PosX = gameStats.screenWidth / 2 - 90.0;
+			float LineText1PosY = 400.0;
+
+			float LineText2PosX = gameStats.screenWidth / 2 - 225.0;
+			float LineText2PosY = 310.0;
+
+			float LineText3PosX = gameStats.screenWidth / 2 - 210.0;
+			float LineText3PosY = 270.0;
+
+			string endText = "GAME ENDED";
+			string keyInstructionText = "Press ENTER to RESTART";
+			string restartText = "or M to go to the MENU";
+
+			PrintMenuText(lineText1PosX, LineText1PosY, endText);
+			PrintMenuText(LineText2PosX, LineText2PosY, keyInstructionText);
+			PrintMenuText(LineText3PosX, LineText3PosY, restartText);
+		}
+
+	}
+
 	void DrawButtonRec(Rectangle button)
 	{
 		Colors white = { 1.0f,1.0f,1.0f,1.0f };
