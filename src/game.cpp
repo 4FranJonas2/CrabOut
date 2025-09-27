@@ -34,10 +34,7 @@ namespace crabOut
 		Init(player1, ball, gameStats, bricks, buttons);
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
-		{
-			gameStats.enterWasPressed = gameStats.enterIsPressed;
-			gameStats.enterIsPressed = slGetKey(SL_KEY_ENTER);
-
+		{	
 			Update(player1, gameStats, ball, bricks, buttons);
 
 			Draw(player1, ball, gameStats, bricks, buttons);
@@ -74,6 +71,9 @@ namespace crabOut
 
 	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[], MenuButtons buttons)
 	{
+		gameStats.enterWasPressed = gameStats.enterIsPressed;
+		gameStats.enterIsPressed = slGetKey(SL_KEY_ENTER);
+
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::FIRSTGAME:
@@ -137,25 +137,57 @@ namespace crabOut
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPLAY;
 			}
+			//en ambos casos pongo gameend en true asi al pasar por reset se reinician las stats
+			else if (slGetKey('R') && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			{
+				player1.gameEnd = true;
+				gameStats.isResetMatch = true;
+				gameStats.gameStatus = SceneStatus::RESETGAME;
+			}
+			else if (slGetKey('M') && gameStats.gameStatus == SceneStatus::GAMEPAUSE)
+			{
+				gameStats.gameStatus = SceneStatus::RESETGAME;
+				player1.gameEnd = true;
+				gameStats.goMenu = true;
+			}
 			break;
 
 		case SceneStatus::RESETGAME:
-
-			if (player1.playerLives == 0 || player1.playerPoints == 900)
-			{
-				player1.gameEnd = true;
-			}
+			
 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
 			InitPlayer(player1, gameStats.gameStatus);
-			gameStats.gameStatus = SceneStatus::GAMEPAUSE;
+			//en caso de volver a menu desde gameplay reset de stats y al menu
+			if (gameStats.goMenu == true)
+			{
+				gameStats.gameStatus = SceneStatus::GAMEMENU;
+				gameStats.goMenu = false;
+			}
+			//en caso de querer hacer reset, reset de stats y a firstgame para juego nuevo
+			else if(gameStats.isResetMatch == true)
+			{
+				gameStats.gameStatus = SceneStatus::FIRSTGAME;
+				gameStats.isResetMatch = false;
+			}
+			else
+			{
+				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
+			}
 			break;
 
 		case SceneStatus::GAMEEND:
 
+			//en caso de muerte o victoria reset de stats
 			if (slGetKey(SL_KEY_ENTER))
 			{
+				player1.gameEnd = true;
 				gameStats.gameStatus = SceneStatus::RESETGAME;
+			}
+			else if (slGetKey('M'))
+			{
+				gameStats.gameStatus = SceneStatus::RESETGAME;
+				player1.gameEnd = true;
+				gameStats.goMenu = true;
 			}
 			break;
 
