@@ -254,22 +254,33 @@ namespace crabOut
 			float LineText3PosX = gameStats.screenWidth / 2 - 100.0;
 			float LineText3PosY = 270.0;
 
+			float LineText4PosX = 190;
+			float LineText4PosY = 220.0;
+
+			float LineText5PosX = 160;
+			float LineText5PosY = 170.0;
+
 			string pauseText = "GAME PAUSE";
 			string keyInstructionText = "Press ENTER key";
+			string continueText = "To Continue";
+			string startText = "To Start Game";
+			string resetText = "Press R to reset game";
+			string menuText = "Press M to go to the MENU";
 
 			PrintMenuText(lineText1PosX, LineText1PosY, pauseText);
 			PrintMenuText(LineText2PosX, LineText2PosY, keyInstructionText);
 
 			if (gameStats.gameStatus == SceneStatus::GAMEPAUSE)
 			{
-				string continueText = "To Continue";
 				PrintMenuText(LineText3PosX, LineText3PosY, continueText);
+				PrintMenuText(LineText4PosX, LineText4PosY, resetText);
+				PrintMenuText(LineText5PosX, LineText5PosY, menuText);
 			}
 			if (gameStats.gameStatus == SceneStatus::FIRSTGAME)
 			{
 				int auxXPos = 15.0;
-				string startText = "To Start Game";
 				PrintMenuText(LineText3PosX - auxXPos, LineText3PosY, startText);
+				PrintMenuText(LineText5PosX, LineText5PosY, menuText);
 			}
 		}
 
