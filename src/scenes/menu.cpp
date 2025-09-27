@@ -5,56 +5,101 @@ namespace crabOut
 {
 	Vector2 recSize = { 90.0, 50.0};
 
+	bool IsMouseOverButton(Rectangle buttonRec)
+	{
+		int mouseXPos = slGetMouseX();
+		int mouseYPos = slGetMouseY();
+
+		float left = buttonRec.recPos.x - buttonRec.recSize.x / 2;
+		float right = buttonRec.recPos.x + buttonRec.recSize.x / 2;
+		float top = buttonRec.recPos.y + buttonRec.recSize.y / 2;
+		float bottom = buttonRec.recPos.y - buttonRec.recSize.y / 2;
+
+		if (mouseXPos >= left && mouseXPos <= right && mouseYPos <= top && mouseYPos >= bottom)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	void PrintMenuText(float posX, float posY, string text)
+	{
+		Colors white = { 1.0f,1.0f,1.0f,1.0f };
+
+		slSetForeColor(white.r, white.g, white.b, white.a);
+		slText(posX, posY, text.c_str());
+	}
+
 	void InitButtons(MenuButtons& buttons)
 	{
 		buttons.backButton.recPos.x = 80.0;
 		buttons.backButton.recPos.y = 45.0;
 		buttons.backButton.recSize.x = 100.0;
 		buttons.backButton.recSize.y = 50.0;
+
+		buttons.linkButton.recPos.x = 575.0;
+		buttons.linkButton.recPos.y = 485.0;
+		buttons.linkButton.recSize.x = 330.0;
+		buttons.linkButton.recSize.y = 30.0;
+
+		buttons.playButton.recPos.x = 395.0;
+		buttons.playButton.recPos.y = 390.0;
+		buttons.playButton.recSize.x = 100.0;
+		buttons.playButton.recSize.y = 40.0;
+
+		buttons.rulesButton.recPos.x = 395.0;
+		buttons.rulesButton.recPos.y = 320.0;
+		buttons.rulesButton.recSize.x = 130.0;
+		buttons.rulesButton.recSize.y = 40.0;
+
+		buttons.creditsButton.recPos.x = 395.0;
+		buttons.creditsButton.recPos.y = 260.0;
+		buttons.creditsButton.recSize.x = 150.0;
+		buttons.creditsButton.recSize.y = 40.0;
 	}
 
-	void UpdateSceneMenus(GameStats& gamestats, MenuButtons buttons)
-	{
-		bool enterIsPressed = false;
-		bool enterWasPressed = false;
+	void UpdateSceneMenus(GameStats& gameStats, MenuButtons buttons)
+	{	
+		gameStats.enterWasPressed = gameStats.enterIsPressed;
+		gameStats.enterIsPressed = slGetMouseButton(SL_MOUSE_BUTTON_LEFT);
 
-		enterWasPressed = enterIsPressed;
-		enterIsPressed = slGetMouseButton(SL_MOUSE_BUTTON_LEFT);
-
-		if (gamestats.gameStatus == SceneStatus::GAMEMENU)
+		if (gameStats.gameStatus == SceneStatus::GAMEMENU)
 		{
-			if (!enterWasPressed && enterIsPressed && IsMouseOverButton(buttons.playButton))
+			if (!gameStats.enterWasPressed && gameStats.enterIsPressed && IsMouseOverButton(buttons.playButton))
 			{
-				gamestats.gameStatus = SceneStatus::FIRSTGAME;
+				gameStats.gameStatus = SceneStatus::FIRSTGAME;
 			}
-			if (!enterWasPressed && enterIsPressed && IsMouseOverButton(buttons.rulesButton))
+			else if (!gameStats.enterWasPressed && gameStats.enterIsPressed && IsMouseOverButton(buttons.rulesButton))
 			{
-				gamestats.gameStatus = SceneStatus::GAMERULES;
+				gameStats.gameStatus = SceneStatus::GAMERULES;
 			}
-			if (!enterWasPressed && enterIsPressed && IsMouseOverButton(buttons.creditsButton))
+			else if (!gameStats.enterWasPressed && gameStats.enterIsPressed && IsMouseOverButton(buttons.creditsButton))
 			{
-				gamestats.gameStatus = SceneStatus::GAMECREDITS;
+				gameStats.gameStatus = SceneStatus::GAMECREDITS;
 			}
 		}
 
-		if (gamestats.gameStatus == SceneStatus::GAMERULES)
+		else if (gameStats.gameStatus == SceneStatus::GAMERULES)
 		{
-			if (enterWasPressed && enterIsPressed && IsMouseOverButton(buttons.backButton))
+			if (!gameStats.enterWasPressed && gameStats.enterIsPressed && IsMouseOverButton(buttons.backButton))
 			{
-				gamestats.gameStatus = SceneStatus::GAMEMENU;
+				gameStats.gameStatus = SceneStatus::GAMEMENU;
 			}
 		}
 
-		if (gamestats.gameStatus == SceneStatus::GAMECREDITS)
+		else if (gameStats.gameStatus == SceneStatus::GAMECREDITS)
 		{
-			if (enterWasPressed && enterIsPressed && IsMouseOverButton(buttons.linkButton))
+			if (!gameStats.enterWasPressed && gameStats.enterIsPressed && IsMouseOverButton(buttons.linkButton))
 			{
 				system("start https://4franjonas2.itch.io/");
 			}
 
-			if (enterWasPressed && enterIsPressed && IsMouseOverButton(buttons.backButton))
+			else if (!gameStats.enterWasPressed && gameStats.enterIsPressed && IsMouseOverButton(buttons.backButton))
 			{
-				gamestats.gameStatus = SceneStatus::GAMEMENU;
+				gameStats.gameStatus = SceneStatus::GAMEMENU;
 			}
 		}
 	}
@@ -83,7 +128,7 @@ namespace crabOut
 			string playText = "Play";
 			string rulesext = "Rules";
 			string creditsText = "Credits";
-			string exitText = "Press ESC at ANY momment to close the game";
+			string exitText = "Press ESC at ANY momment to CLOSE the game";
 
 			PrintMenuText(lineText1PosX, LineText1PosY, titleText);
 			PrintMenuText(LineText2PosX, LineText2PosY, playText);
@@ -93,6 +138,10 @@ namespace crabOut
 			slSetFontSize(10);
 			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, exitText);
 			slSetFontSize(gameStats.fontSize);
+
+			DrawButtonRec(buttons.playButton);
+			DrawButtonRec(buttons.rulesButton);
+			DrawButtonRec(buttons.creditsButton);
 		}
 
 	}
@@ -185,6 +234,7 @@ namespace crabOut
 			slSetFontSize(gameStats.fontSize);
 			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
 
+			DrawButtonRec(buttons.linkButton);
 			DrawButtonRec(buttons.backButton);
 
 		}
@@ -199,33 +249,5 @@ namespace crabOut
 
 		slRectangleOutline(button.recPos.x, button.recPos.y,
 			button.recSize.x, button.recSize.y);
-	}
-
-	bool IsMouseOverButton(Rectangle buttonRec)
-	{
-		int mouseXPos = slGetMouseX();
-		int mouseYPos = slGetMouseY();
-
-		float left = buttonRec.recPos.x - buttonRec.recSize.x / 2;
-		float right = buttonRec.recPos.x + buttonRec.recSize.x / 2;
-		float top = buttonRec.recPos.y - buttonRec.recSize.y / 2;
-		float bottom = buttonRec.recPos.y + buttonRec.recSize.y / 2;
-
-		if (mouseXPos >= left && mouseXPos <= right && mouseYPos >= top && mouseYPos <= bottom)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	void PrintMenuText(float posX, float posY, string text)
-	{
-		Colors white = { 1.0f,1.0f,1.0f,1.0f };
-
-		slSetForeColor(white.r, white.g, white.b, white.a);
-		slText(posX, posY, text.c_str());
 	}
 }

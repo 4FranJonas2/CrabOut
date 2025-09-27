@@ -13,11 +13,14 @@ namespace crabOut
 	struct MenuButtons
 	{
 		Rectangle backButton;
+		Rectangle linkButton;
 		Rectangle playButton;
 		Rectangle rulesButton;
 		Rectangle creditsButton;
-		Rectangle linkButton;
 	};
+	bool IsMouseOverButton(Rectangle buttonRec);
+	void PrintMenuText(float posX, float posY, std::string text);
+
 	void InitButtons(MenuButtons& buttons);
 
 	void UpdateSceneMenus(GameStats& gamestats, MenuButtons buttons);
@@ -27,6 +30,4 @@ namespace crabOut
 	void DrawCreditsMenu(GameStats gameStats, MenuButtons buttons);
 	void DrawButtonRec(Rectangle button);
 
-	bool IsMouseOverButton(Rectangle buttonRec);
-	void PrintMenuText(float posX, float posY, std::string text);
 }
