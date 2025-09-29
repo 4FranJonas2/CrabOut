@@ -46,7 +46,7 @@ namespace crabOut
 		}
 	}
 
-	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints)
+	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints, Vector2& brikcHitPos, bool& brickGotHit)
 	{
 		for (int i = 0; i < maxBriks; i++)
 		{
@@ -76,12 +76,19 @@ namespace crabOut
 						ball.ballCircle.pos.x = left - ball.ballCircle.rad;
 						ball.ballSpeed.x *= -1;
 
+						brikcHitPos.x = gameBricks[i].brickRec.recPos.x;
+						brikcHitPos.y = gameBricks[i].brickRec.recPos.y;
+						brickGotHit = true;
 						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 					else if (minOverlap == overlapRight)
 					{
 						ball.ballCircle.pos.x = right + ball.ballCircle.rad;
 						ball.ballSpeed.x *= -1;
+
+						brikcHitPos.x = gameBricks[i].brickRec.recPos.x;
+						brikcHitPos.y = gameBricks[i].brickRec.recPos.y;
+						brickGotHit = true;
 
 						UpdateBrick(gameBricks, i, plyerPoints);
 					}
@@ -90,12 +97,20 @@ namespace crabOut
 						ball.ballCircle.pos.y = top - ball.ballCircle.rad;
 						ball.ballSpeed.y *= -1;
 
+						brikcHitPos.x = gameBricks[i].brickRec.recPos.x;
+						brikcHitPos.y = gameBricks[i].brickRec.recPos.y;
+						brickGotHit = true;
+
 						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 					else if (minOverlap == overlapBottom)
 					{
 						ball.ballCircle.pos.y = bottom + ball.ballCircle.rad;
 						ball.ballSpeed.y *= -1;
+
+						brikcHitPos.x = gameBricks[i].brickRec.recPos.x;
+						brikcHitPos.y = gameBricks[i].brickRec.recPos.y;
+						brickGotHit = true;
 
 						UpdateBrick(gameBricks, i, plyerPoints);
 					}
@@ -129,11 +144,6 @@ namespace crabOut
 
 	void DrawBrick(Brick gameBricks[], int maxBricks, GameStats gameStats)
 	{
-		/*if (true)
-		{
-
-		}*/
-
 		for (int i = 0; i < maxBricks; i++)
 		{
 			slSetForeColor(gameBricks[i].brickColor.r, gameBricks[i].brickColor.g, gameBricks[i].brickColor.b, gameBricks[i].brickColor.a);
@@ -141,5 +151,4 @@ namespace crabOut
 				gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
 		}
 	}
-
 }

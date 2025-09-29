@@ -10,7 +10,6 @@
 
 namespace crabOut
 {
-
 	struct Brick
 	{
 		Rectangle brickRec;
@@ -23,7 +22,7 @@ namespace crabOut
 	};
 
 	void InitBrick(Brick gameBricks[], int maxBricks, GameStats gameStats, bool gameEnd);
-	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints);
+	void CheckBrickBallStatus(Ball& ball, Brick gameBricks[], int maxBriks, int& plyerPoints, Vector2& brikcHitPos, bool& brickGotHit);
 	void UpdateBrick(Brick brick[], int index, int& playerPoints);
 	void DrawBrick(Brick gameBricks[], int maxBricks, GameStats gameStats);
 }
