@@ -16,9 +16,11 @@ namespace crabOut
 		int playerPoints;
 		int playerLives;
 		float playerVel;
+		bool powerActive;
 		bool gameEnd;
 	};
 
+	void PowersCleaner(Player& player);
 	void InitPlayer(Player& player, SceneStatus initGame);
 	void UpdatePlayer(Player& player);
 	void CheckPlayerWinStatus(Player player, SceneStatus& gameStatus);
