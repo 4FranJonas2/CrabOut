@@ -53,5 +53,6 @@ namespace crabOut
 		bool enterWasPressed = false;
 		bool isResetMatch = false;
 		bool goMenu = false;
+		int backGroundImage;
 	};
 }
