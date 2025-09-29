@@ -108,7 +108,8 @@
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>    xcopy "$(ProjectDir)\lib\sigil-vc2015\*.dll" "$(OutDir)" /s /y
- xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y</Command>
+ xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y
+ xcopy "$(ProjectDir)\res\*.png" "$(OutDir)" /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,7 +137,8 @@
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>    xcopy "$(ProjectDir)\lib\sigil-vc2015\*.dll" "$(OutDir)" /s /y
- xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y</Command>
+ xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y
+ xcopy "$(ProjectDir)\res\*.png" "$(OutDir)" /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -161,7 +163,8 @@
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>    xcopy "$(ProjectDir)\lib\sigil-vc2015\*.dll" "$(OutDir)" /s /y
- xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y</Command>
+ xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y
+ xcopy "$(ProjectDir)\res\*.png" "$(OutDir)" /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -189,7 +192,8 @@
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>    xcopy "$(ProjectDir)\lib\sigil-vc2015\*.dll" "$(OutDir)" /s /y
- xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y</Command>
+ xcopy "$(ProjectDir)\res\*.ttf" "$(OutDir)" /s /y
+ xcopy "$(ProjectDir)\res\*.png" "$(OutDir)" /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
