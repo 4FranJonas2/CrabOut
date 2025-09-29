@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include <iostream>
 #include "sl.h"
 
 #include "objects/player.h"
@@ -7,23 +8,27 @@
 #include "scenes/gameUI.h"
 #include "objects/brick.h"
 #include "scenes/menu.h"
+#include "objects/powerUp.h"
 
-#include <iostream>
 
 using namespace std;
 
 namespace crabOut
 {
-
 	const int maxBricks = 30;
+	const 	int maxPowers = 9;
+
 	GameStats gameStats;
 	Player player1;
 	Ball ball;
 	Brick bricks[maxBricks];
 	MenuButtons buttons;
+	PowerUp powers[maxPowers];
+	Vector2 auxBrickHit;
+	bool hit;
 
-	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons& buttons);
-	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[], MenuButtons buttons);
+	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons& buttons, Vector2& auxBrickHit);
+	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit);
 	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons buttons);
 	static void DeInit(GameStats& gameStats);
 
@@ -32,11 +37,11 @@ namespace crabOut
 		srand(time(nullptr));
 		gameStats.gameStatus = SceneStatus::INITGAME;
 
-		Init(player1, ball, gameStats, bricks, buttons);
+		Init(player1, ball, gameStats, bricks, buttons,auxBrickHit);
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
 		{	
-			Update(player1, gameStats, ball, bricks, buttons);
+			Update(player1, gameStats, ball, bricks, buttons, powers,auxBrickHit);
 
 			Draw(player1, ball, gameStats, bricks, buttons);
 			
@@ -45,7 +50,7 @@ namespace crabOut
 		slClose();
 	}
 
-	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons& buttons)
+	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons& buttons, Vector2& auxBrickHit)
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
@@ -59,6 +64,8 @@ namespace crabOut
 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
 
+			auxBrickHit.x = 0.0;
+			auxBrickHit.y = 0.0;
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, gameStats.fontSize);
 			gameStats.gameStatus = SceneStatus::GAMEMENU;
@@ -70,9 +77,10 @@ namespace crabOut
 		}
 	}
 
-	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[], MenuButtons buttons)
+	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit)
 	{
 		gameStats.enterWasPressed = gameStats.enterIsPressed;
+
 		gameStats.enterIsPressed = slGetKey(SL_KEY_ENTER);
 
 		switch ((SceneStatus)gameStats.gameStatus)
@@ -123,10 +131,13 @@ namespace crabOut
 				CheckPlayerColisionArena(player1, gameStats.screenWidth);
 				CheckCollisionBallArena(ball, player1.playerLives, gameStats);
 				CheckCollisionBallPlayer(ball, player1.playerRec);
-				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints);
+				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints, auxBrickHit, hit);
+				CreatePowerUp(powers, auxBrickHit, hit);
 				CheckPlayerWinStatus(player1, gameStats.gameStatus);
+				UpdatePowerUp(powers, player1.playerRec,player1.playerVel,player1.powerActive);
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
+				PowersCleaner(player1);
 
 				if (!IsPlayerAlive(player1))
 				{
@@ -165,6 +176,7 @@ namespace crabOut
 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
 			InitPlayer(player1, gameStats.gameStatus);
+			ResetPowerUps(powers,gameStats,auxBrickHit,hit);
 			//en caso de volver a menu desde gameplay reset de stats y al menu
 			if (gameStats.goMenu == true)
 			{
@@ -234,6 +246,7 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks,gameStats);
 			DrawPlayer(player1);
+			DrawPowerUp(powers);
 			DrawBall(ball);
 			break;
 
@@ -241,6 +254,7 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
+			DrawPowerUp(powers);
 			DrawBall(ball);
 			DrawPause(gameStats);
 			break;
@@ -249,6 +263,7 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
+			DrawPowerUp(powers);
 			DrawBall(ball);
 			DrawPause(gameStats);
 			break;
