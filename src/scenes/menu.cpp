@@ -238,6 +238,7 @@ namespace crabOut
 			DrawButtonRec(buttons.backButton);
 
 		}
+		slSetForeColor(1.0, 1.0, 1.0, 1.0);
 
 	}
 
@@ -303,6 +304,7 @@ namespace crabOut
 			PrintMenuText(LineText2PosX, LineText2PosY, keyInstructionText);
 			PrintMenuText(LineText3PosX, LineText3PosY, restartText);
 		}
+		slSetForeColor(1.0, 1.0, 1.0, 1.0);
 
 	}
 
@@ -314,5 +316,7 @@ namespace crabOut
 
 		slRectangleOutline(button.recPos.x, button.recPos.y,
 			button.recSize.x, button.recSize.y);
+		slSetForeColor(1.0, 1.0, 1.0, 1.0);
+
 	}
 }

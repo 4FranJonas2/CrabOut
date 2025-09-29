@@ -19,7 +19,7 @@ namespace crabOut
 		float initBallPosY = 36.0;
 
 		Vector2 ballPosition = { initBallPosX, initBallPosY };
-		Vector2 ballSped = {550.0f, 550.0f };
+		Vector2 ballSped = {350.0f, 350.0f };
 
 		//color naranja 
 		ball.ballColor.r = 0.9;
@@ -149,5 +149,6 @@ namespace crabOut
 		slSetForeColor(ball.ballColor.r, ball.ballColor.g, ball.ballColor.b, 1.0);
 		slCircleFill(ball.ballCircle.pos.x, ball.ballCircle.pos.y,
 			ball.ballCircle.rad,50);
+		slSetForeColor(1.0, 1.0, 1.0, 1.0);
 	}
 }

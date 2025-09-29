@@ -110,5 +110,7 @@ namespace crabOut
 		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, player.playerColor.a);
 		slRectangleFill(player.playerRec.recPos.x, player.playerRec.recPos.y,
 			player.playerRec.recSize.x, player.playerRec.recSize.y);
+		slSetForeColor(1.0, 1.0, 1.0, 1.0);
+
 	}
 }

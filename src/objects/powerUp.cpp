@@ -171,6 +171,7 @@ namespace crabOut
 				slSetForeColor(powers[i].powerColor.r, powers[i].powerColor.g, powers[i].powerColor.b, powers[i].powerColor.a);
 				slCircleFill(powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y,
 					powers[i].powerCircle.rad, 50);
+				slSetForeColor(1.0, 1.0, 1.0, 1.0);
 			}
 		}
 	}

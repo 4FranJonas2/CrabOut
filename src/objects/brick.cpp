@@ -149,6 +149,8 @@ namespace crabOut
 			slSetForeColor(gameBricks[i].brickColor.r, gameBricks[i].brickColor.g, gameBricks[i].brickColor.b, gameBricks[i].brickColor.a);
 			slRectangleFill(gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
 				gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
+			slSetForeColor(1.0, 1.0, 1.0, 1.0);
+
 		}
 	}
 }
