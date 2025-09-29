@@ -73,7 +73,7 @@ namespace crabOut
 		brickHit = false;
 	}
 
-	void UpdatePowerUp(PowerUp powers[], Rectangle& playerRec, float& playerSpeed, bool& modActive)
+	void UpdatePowerUp(PowerUp powers[], Rectangle& playerRec, float& playerSpeed, bool& modActive, float& lastPowerTime)
 	{
 		for (int i = 0; i < maxPowers; i++)
 		{
@@ -88,18 +88,21 @@ namespace crabOut
 						int extraLenght = 200.0;
 						playerRec.recSize.x = extraLenght;
 						modActive = true;
+						lastPowerTime = slGetTime();
 					}
 					if (powers[i].isYellowPower == true && modActive == false)
 					{
 						int extraLenght = 40.0;
 						playerRec.recSize.x = extraLenght;
 						modActive = true;
+						lastPowerTime = slGetTime();
 					}
 					if (powers[i].isRedPower == true && modActive == false)
 					{
 						int speedDefuf = 200.0;
 						playerSpeed = speedDefuf;
 						modActive = true;
+						lastPowerTime = slGetTime();
 					}
 					powers[i].isRedPower = false;
 					powers[i].isYellowPower = false;

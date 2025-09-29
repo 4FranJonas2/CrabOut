@@ -19,7 +19,7 @@ namespace crabOut
 	};
 
 	void CreatePowerUp(PowerUp powers[], Vector2& brickPos, bool& brickHit);
-	void UpdatePowerUp(PowerUp powers[], Rectangle& playerRec, float& playerSpeed, bool& modActive);
+	void UpdatePowerUp(PowerUp powers[], Rectangle& playerRec, float& playerSpeed, bool& modActive, float& lastPowerTime);
 	bool CheckCollisionPowerPlayer(PowerUp powers[], Rectangle playerRec);
 	void CheckCollisionBallArena(PowerUp powers[]);
 	void DrawPowerUp(PowerUp powers[]);

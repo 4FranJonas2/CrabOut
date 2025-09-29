@@ -20,7 +20,7 @@ namespace crabOut
 		bool gameEnd;
 	};
 
-	void PowersCleaner(Player& player);
+	void PowersCleaner(Player& player, float powerCoolDown, float lastPowerTime);
 	void InitPlayer(Player& player, SceneStatus initGame);
 	void UpdatePlayer(Player& player);
 	void CheckPlayerWinStatus(Player player, SceneStatus& gameStatus);

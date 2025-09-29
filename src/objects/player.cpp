@@ -2,21 +2,18 @@
 
 namespace crabOut
 {
-	float lastPowerTime = 0.0;
-	float powerCooldown = 6.0f;
-
-	void PowersCleaner(Player& player)
+	float currentTime;
+	
+	void PowersCleaner(Player& player, float powerCoolDown, float lastPowerTime)
 	{
 		float currentTime = slGetTime();
-		lastPowerTime = currentTime;
 
-		if (player.powerActive == true && currentTime - lastPowerTime >= powerCooldown)
+		if (currentTime - lastPowerTime >= powerCoolDown)
 		{
 			player.playerVel = 390.0f;
 			player.playerRec.recSize.x = 100;
 			player.powerActive = false;
 		}
-
 	}
 
 	void InitPlayer(Player& player, SceneStatus initGame)
