@@ -10,13 +10,24 @@
 #include "scenes/menu.h"
 #include "objects/powerUp.h"
 
+//toma power up
+//Sound Effect by <a href = "https://pixabay.com/es/users/r0t0r-34451638/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=151672">R0T0R< / a> from <a href = "https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=151672">Pixabay< / a>
 
+//lcick en boton
+//Sound Effect by <a href = "https://pixabay.com/es/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=99630">freesound_community< / a> from <a href = "https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=99630">Pixabay< / a>
+
+//rebote
+//Sound Effect by <a href = "https://pixabay.com/es/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=82881">freesound_community< / a> from <a href = "https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=82881">Pixabay< / a>
 using namespace std;
 
 namespace crabOut
 {
 	const int maxBricks = 30;
 	const 	int maxPowers = 9;
+
+	float lastPowerTime = 0.0;
+	float powerCooldown = 6.0f;
+	bool hit;
 
 	GameStats gameStats;
 	Player player1;
@@ -25,7 +36,7 @@ namespace crabOut
 	MenuButtons buttons;
 	PowerUp powers[maxPowers];
 	Vector2 auxBrickHit;
-	bool hit;
+
 
 	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons& buttons, Vector2& auxBrickHit);
 	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit);
@@ -58,6 +69,8 @@ namespace crabOut
 		{
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
+
+			gameStats.backGroundImage = slLoadTexture("res/fondoPlaya.png");
 
 			InitButtons(buttons);
 			InitPlayer(player1, gameStats.gameStatus);
@@ -134,10 +147,10 @@ namespace crabOut
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints, auxBrickHit, hit);
 				CreatePowerUp(powers, auxBrickHit, hit);
 				CheckPlayerWinStatus(player1, gameStats.gameStatus);
-				UpdatePowerUp(powers, player1.playerRec,player1.playerVel,player1.powerActive);
+				UpdatePowerUp(powers, player1.playerRec,player1.playerVel,player1.powerActive, lastPowerTime);
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
-				PowersCleaner(player1);
+				PowersCleaner(player1,powerCooldown,lastPowerTime);
 
 				if (!IsPlayerAlive(player1))
 				{
@@ -218,9 +231,12 @@ namespace crabOut
 
 	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons buttons)
 	{
+
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
 		case SceneStatus::FIRSTGAME:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPause(gameStats);
@@ -229,20 +245,27 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEMENU:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
 		    DrawMainMenu( gameStats, buttons);
 
 			break;
 
 		case SceneStatus::GAMERULES:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+
 			DrawRulesMenu(gameStats, buttons);
 
 			break;
 
 		case SceneStatus::GAMECREDITS:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+
 			DrawCreditsMenu(gameStats, buttons);
 			break;
 
 		case SceneStatus::GAMEPLAY:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks,gameStats);
 			DrawPlayer(player1);
@@ -251,6 +274,8 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEPAUSE:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
@@ -260,6 +285,8 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEEND:
+			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
