@@ -5,125 +5,191 @@
 
 namespace crabOut
 {
-	void CreatePowerUp (PowerUp& powers, Rectangle brick)
-	{
-		srand(time(nullptr));
+	int maxPowers = 9;
+	float lastPowerUpTime = 0.0;
+	float powerUpCooldown = 6.0f;  
 
-		int randPower = 3;
+	void CreatePowerUp(PowerUp powers[], Vector2& brickPos, bool& brickHit)
+	{
+		int maxRand = 3;
 		int powerChosse = 0;
+		float currentTime = slGetTime();
 
-		powers.powerRad = 8;
-
-		powers.powerPos.x = brick.recPos.x;
-		powers.powerPos.y = brick.recPos.y;
-
-		powers.powerSpeed = 100;
-
-		powerChosse = 0 + rand() % randPower + 1;
-
-		if (powerChosse == 1)
+		if (brickHit && currentTime - lastPowerUpTime >= powerUpCooldown)
 		{
-			//rojo
-			powers.powerColor.r = 1.0;
-			powers.powerColor.g = 0.0;
-			powers.powerColor.b = 0.0;
-			powers.powerColor.a = 1.0;
-			powers.isRedPower = true;
+			for (int i = 0; i < maxPowers; i++)
+			{
+				if (powers[i].isActive == false)
+				{
+					powers[i].powerCircle.rad = 8;
+
+					powers[i].powerCircle.pos.x = brickPos.x;
+					powers[i].powerCircle.pos.y = brickPos.y;
+
+					powers[i].powerSpeed = 100;
+
+					powerChosse = 0 + rand() % maxRand + 1;
+
+					if (powerChosse == 1)
+					{
+						//rojo
+						powers[i].powerColor.r = 1.0;
+						powers[i].powerColor.g = 0.0;
+						powers[i].powerColor.b = 0.0;
+						powers[i].powerColor.a = 1.0;
+						powers[i].isRedPower = true;
+						powers[i].isActive = true;
+					}
+					if (powerChosse == 2)
+					{
+						//amarillo
+						powers[i].powerColor.r = 1.0;
+						powers[i].powerColor.g = 1.0;
+						powers[i].powerColor.b = 0.3;
+						powers[i].powerColor.a = 1.0;
+						powers[i].isYellowPower = true;
+						powers[i].isActive = true;
+					}
+					if (powerChosse == 3)
+					{
+						//verrde
+						powers[i].powerColor.r = 0.0;
+						powers[i].powerColor.g = 1.0;
+						powers[i].powerColor.b = 0.0;
+						powers[i].powerColor.a = 1.0;
+						powers[i].isGreenPower = true;
+						powers[i].isActive = true;
+					}
+					powerChosse = 0;
+					brickHit = false;
+					break;
+				}
+			}
+			lastPowerUpTime = currentTime;
 		}
-		if (powerChosse == 2)
-		{
-			//amarillo
-			powers.powerColor.r = 1.0;
-			powers.powerColor.g = 1.0;
-			powers.powerColor.b = 0.3;
-			powers.powerColor.a = 1.0;
-			powers.isYellowPower = true;
-		}
-		if (powerChosse == 3)
-		{
-			//verrde
-			powers.powerColor.r = 0.0;
-			powers.powerColor.g = 1.0;
-			powers.powerColor.b = 0.0;
-			powers.powerColor.a = 1.0;
-			powers.isGreenPower = true;
-		}	
+
+		brickPos.x = 0.0;
+		brickPos.y = 0.0;
+		brickHit = false;
 	}
-	void UpdatePowerUp(PowerUp& powers, Rectangle& playerRec)
+
+	void UpdatePowerUp(PowerUp powers[], Rectangle& playerRec, float& playerSpeed, bool& modActive)
 	{
-		powers.powerPos.y -= powers.powerSpeed * slGetDeltaTime();
-
-		if (CheckCollisionPowerPlayer(powers,playerRec))
+		for (int i = 0; i < maxPowers; i++)
 		{
+			if (powers[i].isActive == true)
+			{
+				powers[i].powerCircle.pos.y -= powers[i].powerSpeed * slGetDeltaTime();
 
+				if (CheckCollisionPowerPlayer(powers, playerRec))
+				{
+					if (powers[i].isGreenPower == true && modActive == false)
+					{
+						int extraLenght = 200.0;
+						playerRec.recSize.x = extraLenght;
+						modActive = true;
+					}
+					if (powers[i].isYellowPower == true && modActive == false)
+					{
+						int extraLenght = 40.0;
+						playerRec.recSize.x = extraLenght;
+						modActive = true;
+					}
+					if (powers[i].isRedPower == true && modActive == false)
+					{
+						int speedDefuf = 200.0;
+						playerSpeed = speedDefuf;
+						modActive = true;
+					}
+					powers[i].isRedPower = false;
+					powers[i].isYellowPower = false;
+					powers[i].isGreenPower = false;
+					powers[i].isActive = false;
+				
+				}
+
+				CheckCollisionBallArena(powers);
+			}
 		}
 	}
 
-	bool CheckCollisionPowerPlayer(PowerUp& powers, Rectangle playerRec)
+	bool CheckCollisionPowerPlayer(PowerUp powers[], Rectangle playerRec)
 	{
 		float left = playerRec.recPos.x - playerRec.recSize.x / 2;
 		float right = playerRec.recPos.x + playerRec.recSize.x / 2;
 		float top = playerRec.recPos.y - playerRec.recSize.y / 2;
 		float bottom = playerRec.recPos.y + playerRec.recSize.y / 2;
 
-		if (powers.powerPos.x + powers.powerRad >= left)
+		for (int i = 0; i < maxPowers; i++)
 		{
-			return true;
-		}
-		if (powers.powerPos.x - powers.powerRad <= right )
-		{
-			return true;
-		}
-		if (powers.powerPos.y + powers.powerRad >= top )
-		{
-			return true;
-		}
-		if (powers.powerPos.y - powers.powerRad <= bottom)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
+			if (powers[i].isActive == true)
+			{
+				if (powers[i].powerCircle.pos.x + powers[i].powerCircle.rad >= left &&
+					powers[i].powerCircle.pos.x - powers[i].powerCircle.rad <= right &&
+					powers[i].powerCircle.pos.y + powers[i].powerCircle.rad >= top &&
+					powers[i].powerCircle.pos.y - powers[i].powerCircle.rad <= bottom)
+				{
+					return true;
+				}
+				
+				else
+				{
+					return false;
+				}
+			}
 		}
 	}
 
-	void CheckCollisionBallArena(Ball& ball, int& playerLives, GameStats& gameStats)
+	void CheckCollisionBallArena(PowerUp powers[])
 	{
 		//chequeo de rebote con los bordes de la arena
 		//rebote derecho e izquierdo bas abajo
-		if (ball.ballCircle.pos.x >= (gameStats.screenWidth - ball.ballCircle.rad))
-		{
-			ball.ballCircle.pos.x = gameStats.screenWidth - ball.ballCircle.rad;
-			ball.ballSpeed.x *= -1.0f;
-		}
-		else if (ball.ballCircle.pos.x <= (0 + ball.ballCircle.rad))
-		{
-			ball.ballCircle.pos.x = 0 + ball.ballCircle.rad;
-			ball.ballSpeed.x *= -1.0f;
-		}
 
-		//rebote superior y inferior
-		if (ball.ballCircle.pos.y >= (gameStats.screenHeight - ball.ballCircle.rad))
+		for (int i = 0; i < maxPowers; i++)
 		{
-			ball.ballCircle.pos.y = (gameStats.screenHeight - ball.ballCircle.rad);
-			ball.ballSpeed.y *= -1.0f;
-		}
-		else if (ball.ballCircle.pos.y <= ball.ballCircle.rad)
-		{
-			ball.ballCircle.pos.y = ball.ballCircle.rad;
-			ball.ballSpeed.y *= -1.0f;
+			if (powers[i].powerCircle.pos.y < 0 && powers[i].isActive == true)
+			{
+				powers[i].isRedPower = false;
+				powers[i].isYellowPower = false;
+				powers[i].isGreenPower = false;
+				powers[i].isActive = false;
 
-			playerLives--;
-
-			gameStats.gameStatus = SceneStatus::RESETGAME;
+				break;
+			}
 		}
 	}
 
-	void DrawBall(Ball& ball)
+	void DrawPowerUp(PowerUp powers[])
 	{
-		slSetForeColor(ball.ballColor.r, ball.ballColor.g, ball.ballColor.b, 1.0);
-		slCircleFill(ball.ballCircle.pos.x, ball.ballCircle.pos.y,
-			ball.ballCircle.rad, 50);
+		for (int i = 0; i < maxPowers; i++)
+		{
+			if (powers[i].isActive == true)
+			{
+				slSetForeColor(powers[i].powerColor.r, powers[i].powerColor.g, powers[i].powerColor.b, powers[i].powerColor.a);
+				slCircleFill(powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y,
+					powers[i].powerCircle.rad, 50);
+			}
+		}
+	}
+
+	void ResetPowerUps(PowerUp powers[], GameStats gamestats, Vector2& brickPos, bool& brickHit)
+	{
+		brickPos.x = 0.0;
+		brickPos.y = 0.0;
+		brickHit = false;
+
+		if (gamestats.gameStatus == SceneStatus::RESETGAME)
+		{
+			for (int i = 0; i < maxPowers; i++)
+			{
+				if (powers[i].isActive == true)
+				{
+					powers[i].isRedPower = false;
+					powers[i].isYellowPower = false;
+					powers[i].isGreenPower = false;
+					powers[i].isActive = false;
+				}
+			}
+		}
 	}
 }
