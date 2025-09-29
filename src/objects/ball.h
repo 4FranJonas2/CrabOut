@@ -6,12 +6,7 @@
 
 namespace crabOut
 {
-	struct Circle
-	{
-		Vector2 pos;
-		float rad;
-	};
-
+	
 	enum class BallDir
 	{
 		UPRIGHT=1,
