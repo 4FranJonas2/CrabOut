@@ -2,10 +2,17 @@
 
 namespace crabOut
 {
+
 	struct Vector2
 	{
 		float x;
 		float y;
+	};
+
+	struct Circle
+	{
+		Vector2 pos;
+		float rad;
 	};
 
 	struct Colors
