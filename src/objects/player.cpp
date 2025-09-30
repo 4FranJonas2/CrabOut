@@ -3,7 +3,7 @@
 namespace crabOut
 {
 	float currentTime;
-	
+
 	void PowersCleaner(Player& player, float powerCoolDown, float lastPowerTime)
 	{
 		float currentTime = slGetTime();
@@ -20,14 +20,14 @@ namespace crabOut
 	{
 		//default stats for player
 		int lives = 3;
-		int playerRecWidth = 100;
-		int playerRecHeight = 20;
+		int playerRecWidth = 150;
+		int playerRecHeight = 60;
 		float initPlayerPosX = 400;
-		float initPlayerPosY = 15;
+		float initPlayerPosY = 30;
 
 		//rojo
 		player.playerColor.r = 1.0;
-		player.playerColor.g= 0.3;
+		player.playerColor.g = 0.3;
 		player.playerColor.b = 0.1;
 		player.playerColor.a = 1.0;
 
@@ -59,7 +59,7 @@ namespace crabOut
 			player.playerRec.recPos.x += player.playerVel * slGetDeltaTime();
 		}
 	}
-	 
+
 	void CheckPlayerWinStatus(Player player, SceneStatus& gameStatus)
 	{
 		if (player.playerLives == 0)
@@ -69,13 +69,13 @@ namespace crabOut
 	}
 	void CheckPlayerColisionArena(Player& player, int screenWidth)
 	{
-		if (player.playerRec.recPos.x - player.playerRec.recSize.x /2 <= 0)
+		if (player.playerRec.recPos.x - player.playerRec.recSize.x / 2 <= 0)
 		{
-			player.playerRec.recPos.x =0 + player.playerRec.recSize.x /2;
+			player.playerRec.recPos.x = 0 + player.playerRec.recSize.x / 2;
 		}
-		if (player.playerRec.recPos.x + player.playerRec.recSize.x/2 >= screenWidth)
+		if (player.playerRec.recPos.x + player.playerRec.recSize.x / 2 >= screenWidth)
 		{
-			player.playerRec.recPos.x = screenWidth - player.playerRec.recSize.x /2;
+			player.playerRec.recPos.x = screenWidth - player.playerRec.recSize.x / 2;
 		}
 	}
 
@@ -105,12 +105,42 @@ namespace crabOut
 		}
 	}
 
-	void DrawPlayer(Player player)
+
+
+
+	void DrawPlayer(Player& player, GameStats& gamePlayer)
 	{
-		slSetForeColor(player.playerColor.r, player.playerColor.g, player.playerColor.b, player.playerColor.a);
-		slRectangleFill(player.playerRec.recPos.x, player.playerRec.recPos.y,
-			player.playerRec.recSize.x, player.playerRec.recSize.y);
-		slSetForeColor(1.0, 1.0, 1.0, 1.0);
+
+		double t = slGetTime() - player.startTime;
+		player.currentFrame = int(t / 0.2) % 3;
+
+		if (slGetKey('A'))
+		{
+			slSetSpriteTiling(player.frameWidth, 1.0);
+			slSetSpriteScroll(player.currentFrame * player.frameWidth, 0.0);
+			slSprite(gamePlayer.crabNormalWalk, player.playerRec.recPos.x, player.playerRec.recPos.y, player.playerRec.recSize.x, player.playerRec.recSize.y);
+			slSetSpriteTiling(1.0, 1.0);
+			slSetSpriteScroll(0.0, 0.0);
+		}
+		//derecha
+		else if (slGetKey('D'))
+		{
+			slSetSpriteTiling(player.frameWidth, 1.0);
+			slSetSpriteScroll(player.currentFrame * player.frameWidth, 0.0);
+			slSprite(gamePlayer.crabNormalWalk, player.playerRec.recPos.x, player.playerRec.recPos.y, player.playerRec.recSize.x, player.playerRec.recSize.y);
+			slSetSpriteTiling(1.0, 1.0);
+			slSetSpriteScroll(0.0, 0.0);
+		}
+		else
+		{
+			slSetSpriteTiling(player.frameWidth, 1.0);
+			slSetSpriteScroll(player.currentFrame * player.frameWidth, 0.0);
+			slSprite(gamePlayer.crabNormalWalk, player.playerRec.recPos.x, player.playerRec.recPos.y, player.playerRec.recSize.x, player.playerRec.recSize.y);
+			slSetSpriteTiling(1.0, 1.0);
+			slSetSpriteScroll(0.0, 0.0);
+
+
+		}
 
 	}
 }

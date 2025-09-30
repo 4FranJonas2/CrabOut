@@ -18,6 +18,10 @@ namespace crabOut
 		float playerVel;
 		bool powerActive;
 		bool gameEnd;
+		float frames = 3;
+		float frameWidth = 1.0f / frames;
+		double startTime = slGetTime();
+		int currentFrame = 0;
 	};
 
 	void PowersCleaner(Player& player, float powerCoolDown, float lastPowerTime);
@@ -27,6 +31,6 @@ namespace crabOut
 	void CheckPlayerColisionArena(Player& player, int screenHeight);
 	bool IsPlayerAlive(Player player);
 	bool HasPlayerReachMaxPoints(Player player);
-	void DrawPlayer(Player player);
+	void DrawPlayer(Player& player, GameStats& gamePlayer);
 }
 
