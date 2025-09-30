@@ -22,7 +22,7 @@ namespace crabOut
 		slSetFontSize(15);
 		PrintText(pauseTextPosX, pauseTextPosY, pauseKeyText);
 		slSetFontSize(gameStats.fontSize);
-		
+
 		PrintText(livesTextPosX, livesTextPosY, livesText);
 		PrintText(scoreTextPosX, scoreTextPosY, scoreText);
 	}

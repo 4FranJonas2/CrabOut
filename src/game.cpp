@@ -10,14 +10,6 @@
 #include "scenes/menu.h"
 #include "objects/powerUp.h"
 
-//toma power up
-//Sound Effect by <a href = "https://pixabay.com/es/users/r0t0r-34451638/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=151672">R0T0R< / a> from <a href = "https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=151672">Pixabay< / a>
-
-//lcick en boton
-//Sound Effect by <a href = "https://pixabay.com/es/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=99630">freesound_community< / a> from <a href = "https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=99630">Pixabay< / a>
-
-//rebote
-//Sound Effect by <a href = "https://pixabay.com/es/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=82881">freesound_community< / a> from <a href = "https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=82881">Pixabay< / a>
 using namespace std;
 
 namespace crabOut
@@ -42,21 +34,20 @@ namespace crabOut
 	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit);
 	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons buttons);
 	static void InitTextures(GameStats& gameTextures);
-	static void DeInit(GameStats& gameStats);
 
 	void RunGame()
 	{
 		srand(time(nullptr));
 		gameStats.gameStatus = SceneStatus::INITGAME;
 
-		Init(player1, ball, gameStats, bricks, buttons,auxBrickHit);
+		Init(player1, ball, gameStats, bricks, buttons, auxBrickHit);
 
 		while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
-		{	
-			Update(player1, gameStats, ball, bricks, buttons, powers,auxBrickHit);
+		{
+			Update(player1, gameStats, ball, bricks, buttons, powers, auxBrickHit);
 
 			Draw(player1, ball, gameStats, bricks, buttons);
-			
+
 			slRender();
 		}
 		slClose();
@@ -68,7 +59,6 @@ namespace crabOut
 		{
 		case SceneStatus::INITGAME:
 		{
-			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
 			InitTextures(gameStats);
 			InitButtons(buttons);
@@ -84,7 +74,7 @@ namespace crabOut
 
 			gameStats.gameStatus = SceneStatus::GAMEMENU;
 		}
-			break;
+		break;
 
 		default:
 			break;
@@ -134,7 +124,7 @@ namespace crabOut
 			break;
 
 		case SceneStatus::GAMEPLAY:
-			
+
 			if (!gameStats.enterWasPressed && gameStats.enterIsPressed && gameStats.gameStatus == SceneStatus::GAMEPLAY)
 			{
 				gameStats.gameStatus = SceneStatus::GAMEPAUSE;
@@ -148,10 +138,10 @@ namespace crabOut
 				CheckBrickBallStatus(ball, gameBrick, maxBricks, player1.playerPoints, auxBrickHit, hit);
 				CreatePowerUp(powers, auxBrickHit, hit);
 				CheckPlayerWinStatus(player1, gameStats.gameStatus);
-				UpdatePowerUp(powers, player1.playerRec,player1.playerVel,player1.powerActive, lastPowerTime);
+				UpdatePowerUp(powers, player1.playerRec, player1.playerVel, player1.powerActive, lastPowerTime);
 				UpdatePlayer(player1);
 				UpdateBall(ball, gameStats, player1.playerRec.recPos.x, player1.playerRec.recPos.y);
-				PowersCleaner(player1,powerCooldown,lastPowerTime);
+				PowersCleaner(player1, powerCooldown, lastPowerTime);
 
 				if (!IsPlayerAlive(player1))
 				{
@@ -186,11 +176,11 @@ namespace crabOut
 			break;
 
 		case SceneStatus::RESETGAME:
-			
-			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
+
+ 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
 			InitBall(ball);
 			InitPlayer(player1, gameStats.gameStatus);
-			ResetPowerUps(powers,gameStats,auxBrickHit,hit);
+			ResetPowerUps(powers, gameStats, auxBrickHit, hit);
 			//en caso de volver a menu desde gameplay reset de stats y al menu
 			if (gameStats.goMenu == true)
 			{
@@ -198,7 +188,7 @@ namespace crabOut
 				gameStats.goMenu = false;
 			}
 			//en caso de querer hacer reset, reset de stats y a firstgame para juego nuevo
-			else if(gameStats.isResetMatch == true)
+			else if (gameStats.isResetMatch == true)
 			{
 				gameStats.gameStatus = SceneStatus::FIRSTGAME;
 				gameStats.isResetMatch = false;
@@ -248,7 +238,7 @@ namespace crabOut
 		case SceneStatus::GAMEMENU:
 			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
 			slSprite(gameStats.coconutTree, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
-		    DrawMainMenu( gameStats, buttons);
+			DrawMainMenu(gameStats, buttons);
 
 			break;
 
@@ -269,7 +259,7 @@ namespace crabOut
 			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
 
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
-			DrawBrick(gameBrick, maxBricks,gameStats);
+			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPowerUp(powers, gameStats);
 			DrawBall(ball, gameStats);
 			DrawPlayer(player1, gameStats);
@@ -291,8 +281,8 @@ namespace crabOut
 
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
-			DrawPowerUp(powers,gameStats);
-			DrawBall(ball,gameStats);
+			DrawPowerUp(powers, gameStats);
+			DrawBall(ball, gameStats);
 			DrawPause(gameStats);
 			DrawPlayer(player1, gameStats);
 			break;
@@ -301,6 +291,7 @@ namespace crabOut
 			break;
 		}
 	}
+	
 	static void InitTextures(GameStats& gameTextures)
 	{
 		gameStats.backGroundImage = slLoadTexture("res/fondoPlaya.png");
@@ -311,19 +302,5 @@ namespace crabOut
 		gameStats.coconutTree = slLoadTexture("res/menuTree.png");
 		gameStats.backButton = slLoadTexture("res/backButton.png");
 		gameStats.crabNormalWalk = slLoadTexture("res/crabNormalWalk.png");
-	}
-
-	static void DeInit(GameStats& gameStats)
-	{
-		switch ((SceneStatus)gameStats.gameStatus)
-		{
-		case SceneStatus::SIMEND:
-
-			
-			break;
-
-		default:
-			break;
-		}
 	}
 }

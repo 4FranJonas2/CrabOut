@@ -7,7 +7,7 @@ namespace crabOut
 {
 	int maxPowers = 9;
 	float lastPowerUpTime = 0.0;
-	float powerUpCooldown = 6.0f;  
+	float powerUpCooldown = 6.0f;
 
 	void CreatePowerUp(PowerUp powers[], Vector2& brickPos, bool& brickHit)
 	{
@@ -108,9 +108,7 @@ namespace crabOut
 					powers[i].isYellowPower = false;
 					powers[i].isGreenPower = false;
 					powers[i].isActive = false;
-				
 				}
-
 				CheckCollisionBallArena(powers);
 			}
 		}
@@ -134,7 +132,6 @@ namespace crabOut
 				{
 					return true;
 				}
-				
 				else
 				{
 					return false;
@@ -180,10 +177,6 @@ namespace crabOut
 				{
 					slSprite(gameCoco.redCoconut, powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y, powers[i].powerCircle.rad * 2, powers[i].powerCircle.rad * 2);
 				}
-				/*slSetForeColor(powers[i].powerColor.r, powers[i].powerColor.g, powers[i].powerColor.b, powers[i].powerColor.a);
-				slCircleFill(powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y,
-					powers[i].powerCircle.rad, 50);
-				slSetForeColor(1.0, 1.0, 1.0, 1.0);*/
 			}
 		}
 	}

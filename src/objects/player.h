@@ -33,4 +33,3 @@ namespace crabOut
 	bool HasPlayerReachMaxPoints(Player player);
 	void DrawPlayer(Player& player, GameStats& gamePlayer);
 }
-

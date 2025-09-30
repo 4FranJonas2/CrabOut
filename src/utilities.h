@@ -2,7 +2,6 @@
 
 namespace crabOut
 {
-
 	struct Vector2
 	{
 		float x;

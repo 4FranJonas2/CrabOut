@@ -40,7 +40,6 @@ namespace crabOut
 					gameBricks[brickCounter].isBrickActive = true;
 					gameBricks[brickCounter].gotHit = false;
 				}
-
 				brickCounter++;
 			}
 		}
@@ -53,7 +52,6 @@ namespace crabOut
 			//si ladrillo tiene vidas lo analizo
 			if (gameBricks[i].brickLives > 0)
 			{
-
 				float left = gameBricks[i].brickRec.recPos.x - gameBricks[i].brickRec.recSize.x / 2;
 				float right = gameBricks[i].brickRec.recPos.x + gameBricks[i].brickRec.recSize.x / 2;
 				float top = gameBricks[i].brickRec.recPos.y - gameBricks[i].brickRec.recSize.y / 2;
@@ -115,7 +113,6 @@ namespace crabOut
 						UpdateBrick(gameBricks, i, plyerPoints);
 					}
 				}
-
 			}
 			//si es golpeado se opaca mas y mas 
 			if (gameBricks[i].gotHit == true)
@@ -150,7 +147,6 @@ namespace crabOut
 			slRectangleFill(gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
 				gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
 			slSetForeColor(1.0, 1.0, 1.0, 1.0);
-
 		}
 	}
 }

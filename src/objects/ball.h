@@ -31,5 +31,3 @@ namespace crabOut
 	void CheckCollisionBallArena(Ball& ball, int& playerLives, GameStats& gameStats);
 	void DrawBall(Ball& ball, GameStats gameCoconut);
 }
-
-

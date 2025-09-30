@@ -11,7 +11,7 @@ namespace crabOut
 		if (currentTime - lastPowerTime >= powerCoolDown)
 		{
 			player.playerVel = 390.0f;
-			player.playerRec.recSize.x = 100;
+			player.playerRec.recSize.x = 150;
 			player.powerActive = false;
 		}
 	}
@@ -105,12 +105,8 @@ namespace crabOut
 		}
 	}
 
-
-
-
 	void DrawPlayer(Player& player, GameStats& gamePlayer)
 	{
-
 		double t = slGetTime() - player.startTime;
 		player.currentFrame = int(t / 0.2) % 3;
 
@@ -138,9 +134,6 @@ namespace crabOut
 			slSprite(gamePlayer.crabNormalWalk, player.playerRec.recPos.x, player.playerRec.recPos.y, player.playerRec.recSize.x, player.playerRec.recSize.y);
 			slSetSpriteTiling(1.0, 1.0);
 			slSetSpriteScroll(0.0, 0.0);
-
-
 		}
-
 	}
 }
