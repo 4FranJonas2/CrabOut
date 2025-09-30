@@ -6,8 +6,6 @@
 
 namespace crabOut
 {
-	
-
 	struct Player
 	{
 		Rectangle playerRec;
