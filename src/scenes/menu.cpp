@@ -27,9 +27,9 @@ namespace crabOut
 
 	void PrintMenuText(float posX, float posY, string text)
 	{
-		Colors white = { 1.0f,1.0f,1.0f,1.0f };
+		Colors black = { 0.0f,0.0f,0.0f,1.0f };
 
-		slSetForeColor(white.r, white.g, white.b, white.a);
+		slSetForeColor(black.r, black.g, black.b, black.a);
 		slText(posX, posY, text.c_str());
 	}
 
@@ -134,7 +134,7 @@ namespace crabOut
 			PrintMenuText(LineText2PosX, LineText2PosY, playText);
 			PrintMenuText(LineText3PosX, LineText3PosY, rulesext);
 			PrintMenuText(LineText4PosX - auxXPos, LineText4PosY, creditsText);
-			
+
 			slSetFontSize(10);
 			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, exitText);
 			slSetFontSize(gameStats.fontSize);
