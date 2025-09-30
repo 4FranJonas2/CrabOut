@@ -37,7 +37,7 @@ namespace crabOut
 
 	void UpdateBall(Ball& ball, GameStats gameStatus, int playerPosX, int playerPosY)
 	{	
-		int auxYPos = 22.0f;
+		int auxYPos = 42.0;
 		
 		if (gameStatus.gameStatus == SceneStatus::GAMEPAUSE or gameStatus.gameStatus == SceneStatus::FIRSTGAME)
 		{
