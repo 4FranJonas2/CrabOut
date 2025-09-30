@@ -4,7 +4,7 @@ using namespace std;
 
 namespace crabOut
 {
-	Colors white = { 1.0f,1.0f,1.0f,1.0f };
+	Colors black = { 0.0f,0.0f,0.0f,1.0f };
 
 	void gamePlayUi(int playerLives, int playerScore, GameStats gameStats)
 	{
@@ -29,7 +29,7 @@ namespace crabOut
 
 	void PrintText(float posX, float posY, string text)
 	{
-		slSetForeColor(white.r, white.g, white.b, white.a);
+		slSetForeColor(black.r, black.g, black.b, black.a);
 		slText(posX, posY, text.c_str());
 	}
 }
