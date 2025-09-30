@@ -241,8 +241,8 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPause(gameStats);
-			DrawPlayer(player1);
 			DrawBall(ball, gameStats);
+			DrawPlayer(player1, gameStats);
 			break;
 
 		case SceneStatus::GAMEMENU:
@@ -270,9 +270,9 @@ namespace crabOut
 
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks,gameStats);
-			DrawPlayer(player1);
 			DrawPowerUp(powers, gameStats);
 			DrawBall(ball, gameStats);
+			DrawPlayer(player1, gameStats);
 			break;
 
 		case SceneStatus::GAMEPAUSE:
@@ -280,10 +280,10 @@ namespace crabOut
 
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
-			DrawPlayer(player1);
 			DrawPowerUp(powers, gameStats);
 			DrawBall(ball, gameStats);
 			DrawPause(gameStats);
+			DrawPlayer(player1, gameStats);
 			break;
 
 		case SceneStatus::GAMEEND:
@@ -291,10 +291,10 @@ namespace crabOut
 
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
-			DrawPlayer(player1);
 			DrawPowerUp(powers,gameStats);
 			DrawBall(ball,gameStats);
 			DrawPause(gameStats);
+			DrawPlayer(player1, gameStats);
 			break;
 
 		default:
@@ -309,6 +309,8 @@ namespace crabOut
 		gameStats.yellowCoconut = slLoadTexture("res/yellowCoconut.png");
 		gameStats.greenCoconut = slLoadTexture("res/greenCoconut.png");
 		gameStats.coconutTree = slLoadTexture("res/menuTree.png");
+		gameStats.backButton = slLoadTexture("res/backButton.png");
+		gameStats.crabNormalWalk = slLoadTexture("res/crabNormalWalk.png");
 	}
 
 	static void DeInit(GameStats& gameStats)
