@@ -207,6 +207,7 @@
     <ClCompile Include="src\scenes\menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\objects\ball.h" />
     <ClInclude Include="src\objects\brick.h" />
@@ -215,6 +216,13 @@
     <ClInclude Include="src\scenes\gameUI.h" />
     <ClInclude Include="src\scenes\menu.h" />
     <ClInclude Include="src\utilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Title.ico" />
+    <Image Include="res\Title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="IcocnoExe.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
