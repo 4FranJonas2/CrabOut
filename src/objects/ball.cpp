@@ -16,7 +16,8 @@ namespace crabOut
 		#define DEG2RAD (3.14 / 180.0f)
 
 		float initBallPosX = 400.0;
-		float initBallPosY = 36.0;
+		float initBallPosY = 42.0;
+		float auxYCorrection = 30.0;
 
 		Vector2 ballPosition = { initBallPosX, initBallPosY };
 		Vector2 ballSped = {350.0f, 350.0f };
@@ -31,7 +32,7 @@ namespace crabOut
 		ball.ballSpeed.y = sinf(angle) * ballSped.y;
 		
 		ball.ballCircle.pos.x = ballPosition.x;
-		ball.ballCircle.pos.y = ballPosition.y;
+		ball.ballCircle.pos.y = ballPosition.y+ auxYCorrection;
 		ball.frameCounter = 0;
 	}
 
@@ -146,10 +147,6 @@ namespace crabOut
 
 	void DrawBall(Ball& ball, GameStats gameCoconut)
 	{
-		//slSetForeColor(ball.ballColor.r, ball.ballColor.g, ball.ballColor.b, 1.0);
-		/*slCircleFill(ball.ballCircle.pos.x, ball.ballCircle.pos.y,
-			ball.ballCircle.rad,50);*/
 		slSprite(gameCoconut.coconut, ball.ballCircle.pos.x, ball.ballCircle.pos.y, ball.ballCircle.rad*2, ball.ballCircle.rad*2);
-		//slSetForeColor(1.0, 1.0, 1.0, 1.0);
 	}
 }
