@@ -223,14 +223,8 @@ namespace crabOut
 		float LineText2PosX = 10.0;
 		float LineText2PosY = 480.0;
 
-		/*float LineText3PosX = gameStats.screenWidth / 2 - 150.0;
-		float LineText3PosY = 410.0;
-
-		float LineText4PosX = 100.0;
-		float LineText4PosY = 330.0;
-
-		float LineText5PosX = 170.0;
-		float LineText5PosY = 300.0;*/
+		float LineText3PosX = 10.0;
+		float LineText3PosY = 440.0;
 
 		float LineText6PosX = 50.0;
 		float LineText6PosY = 35.0;
@@ -242,18 +236,15 @@ namespace crabOut
 			string titleText = "CREDITS";
 
 			string howToMoveText = "-Game made by me Francisco Jonas: https://4franjonas2.itch.io/.";
-			/*string winConditionText = "-Break all the blocks to win";
-			string loseConditionText1 = "-You will have 3 Lives, if the ball touch the bottom you ";
-			string loseConditionText2 = "lose 1 live, lose them all and its game over.";*/
+			string creditText1 = "-Game assests made by Francisco Jonas";
 			string exitText = "Back";
 
 			PrintMenuText(lineText1PosX, LineText1PosY, titleText);
 
 			slSetFontSize(15);
 			PrintMenuText(LineText2PosX, LineText2PosY, howToMoveText);
-			/*PrintMenuText(LineText3PosX, LineText3PosY, winConditionText);
-			PrintMenuText(LineText4PosX - auxXPos, LineText4PosY, loseConditionText1);
-			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, loseConditionText2);*/
+			PrintMenuText(LineText3PosX, LineText3PosY, creditText1);
+			
 			slSetFontSize(gameStats.fontSize);
 			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
 
