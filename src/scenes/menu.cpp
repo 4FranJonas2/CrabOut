@@ -266,7 +266,7 @@ namespace crabOut
 		if (gameStats.gameStatus == SceneStatus::GAMEPAUSE || gameStats.gameStatus == SceneStatus::FIRSTGAME)
 		{
 			float lineText1PosX = gameStats.screenWidth / 2 - 90.0;
-			float LineText1PosY = 400.0;
+			float LineText1PosY = 580.0;
 
 			float LineText2PosX = gameStats.screenWidth / 2 - 135.0;
 			float LineText2PosY = 310.0;
@@ -307,7 +307,7 @@ namespace crabOut
 		if (gameStats.gameStatus == SceneStatus::GAMEEND)
 		{
 			float lineText1PosX = gameStats.screenWidth / 2 - 90.0;
-			float LineText1PosY = 400.0;
+			float LineText1PosY = 580.0;
 
 			float LineText2PosX = gameStats.screenWidth / 2 - 225.0;
 			float LineText2PosY = 310.0;
