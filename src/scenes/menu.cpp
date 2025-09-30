@@ -138,10 +138,11 @@ namespace crabOut
 			slSetFontSize(10);
 			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, exitText);
 			slSetFontSize(gameStats.fontSize);
+			slSetForeColor(1.0, 1.0, 1.0, 1.0);
 
-			DrawButtonRec(buttons.playButton);
+			/*DrawButtonRec(buttons.playButton);
 			DrawButtonRec(buttons.rulesButton);
-			DrawButtonRec(buttons.creditsButton);
+			DrawButtonRec(buttons.creditsButton);*/
 		}
 
 	}
@@ -185,9 +186,14 @@ namespace crabOut
 			PrintMenuText(LineText4PosX - auxXPos, LineText4PosY, loseConditionText1);
 			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, loseConditionText2);
 			slSetFontSize(gameStats.fontSize);
-			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
 
-			DrawButtonRec(buttons.backButton);
+			slSetForeColor(1.0, 1.0, 1.0, 1.0);
+			slSprite(gameStats.backButton, buttons.backButton.recPos.x, buttons.backButton.recPos.y,
+				buttons.backButton.recSize.x, buttons.backButton.recSize.y);
+			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
+			slSetForeColor(1.0, 1.0, 1.0, 1.0);
+
+			//DrawButtonRec(buttons.backButton);
 		}
 
 	}
@@ -235,7 +241,12 @@ namespace crabOut
 			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
 
 			DrawButtonRec(buttons.linkButton);
-			DrawButtonRec(buttons.backButton);
+			
+			slSetForeColor(1.0, 1.0, 1.0, 1.0);
+			slSprite(gameStats.backButton, buttons.backButton.recPos.x, buttons.backButton.recPos.y,
+				buttons.backButton.recSize.x, buttons.backButton.recSize.y);
+			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
+			slSetForeColor(1.0, 1.0, 1.0, 1.0);
 
 		}
 		slSetForeColor(1.0, 1.0, 1.0, 1.0);
