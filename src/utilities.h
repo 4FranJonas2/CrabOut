@@ -59,5 +59,7 @@ namespace crabOut
 		int yellowCoconut;
 		int greenCoconut;
 		int coconutTree;
+		int backButton;
+		int crabNormalWalk;
 	};
 }
