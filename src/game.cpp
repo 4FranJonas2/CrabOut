@@ -41,6 +41,7 @@ namespace crabOut
 	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons& buttons, Vector2& auxBrickHit);
 	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick brick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit);
 	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick brick[], MenuButtons buttons);
+	static void InitTextures(GameStats& gameTextures);
 	static void DeInit(GameStats& gameStats);
 
 	void RunGame()
@@ -61,7 +62,7 @@ namespace crabOut
 		slClose();
 	}
 
-	void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons& buttons, Vector2& auxBrickHit)
+	static void Init(Player& player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons& buttons, Vector2& auxBrickHit)
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
@@ -69,9 +70,7 @@ namespace crabOut
 		{
 			// set up our window and a few resources we need
 			slWindow(gameStats.screenWidth, gameStats.screenHeight, "CrabOut", false);
-
-			gameStats.backGroundImage = slLoadTexture("res/fondoPlaya.png");
-
+			InitTextures(gameStats);
 			InitButtons(buttons);
 			InitPlayer(player1, gameStats.gameStatus);
 			InitBrick(gameBrick, maxBricks, gameStats, player1.gameEnd);
@@ -79,8 +78,10 @@ namespace crabOut
 
 			auxBrickHit.x = 0.0;
 			auxBrickHit.y = 0.0;
+
 			int font = slLoadFont("res/dogicapixel.ttf");
 			slSetFont(font, gameStats.fontSize);
+
 			gameStats.gameStatus = SceneStatus::GAMEMENU;
 		}
 			break;
@@ -90,7 +91,7 @@ namespace crabOut
 		}
 	}
 
-	void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit)
+	static void Update(Player& player1, GameStats& gameStats, Ball& ball, Brick gameBrick[], MenuButtons buttons, PowerUp powers[], Vector2& auxBrickHit)
 	{
 		gameStats.enterWasPressed = gameStats.enterIsPressed;
 
@@ -229,7 +230,7 @@ namespace crabOut
 		}
 	}
 
-	void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons buttons)
+	static void Draw(Player player1, Ball& ball, GameStats& gameStats, Brick gameBrick[], MenuButtons buttons)
 	{
 
 		switch ((SceneStatus)gameStats.gameStatus)
@@ -241,11 +242,12 @@ namespace crabOut
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPause(gameStats);
 			DrawPlayer(player1);
-			DrawBall(ball);
+			DrawBall(ball, gameStats);
 			break;
 
 		case SceneStatus::GAMEMENU:
 			slSprite(gameStats.backGroundImage, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
+			slSprite(gameStats.coconutTree, gameStats.screenWidth / 2, gameStats.screenHeight / 2, gameStats.screenWidth, gameStats.screenHeight);
 		    DrawMainMenu( gameStats, buttons);
 
 			break;
@@ -269,8 +271,8 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks,gameStats);
 			DrawPlayer(player1);
-			DrawPowerUp(powers);
-			DrawBall(ball);
+			DrawPowerUp(powers, gameStats);
+			DrawBall(ball, gameStats);
 			break;
 
 		case SceneStatus::GAMEPAUSE:
@@ -279,8 +281,8 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
-			DrawPowerUp(powers);
-			DrawBall(ball);
+			DrawPowerUp(powers, gameStats);
+			DrawBall(ball, gameStats);
 			DrawPause(gameStats);
 			break;
 
@@ -290,8 +292,8 @@ namespace crabOut
 			gamePlayUi(player1.playerLives, player1.playerPoints, gameStats);
 			DrawBrick(gameBrick, maxBricks, gameStats);
 			DrawPlayer(player1);
-			DrawPowerUp(powers);
-			DrawBall(ball);
+			DrawPowerUp(powers,gameStats);
+			DrawBall(ball,gameStats);
 			DrawPause(gameStats);
 			break;
 
@@ -299,8 +301,17 @@ namespace crabOut
 			break;
 		}
 	}
+	static void InitTextures(GameStats& gameTextures)
+	{
+		gameStats.backGroundImage = slLoadTexture("res/fondoPlaya.png");
+		gameStats.coconut = slLoadTexture("res/coconut.png");
+		gameStats.redCoconut = slLoadTexture("res/redCoconut.png");
+		gameStats.yellowCoconut = slLoadTexture("res/yellowCoconut.png");
+		gameStats.greenCoconut = slLoadTexture("res/greenCoconut.png");
+		gameStats.coconutTree = slLoadTexture("res/menuTree.png");
+	}
 
-	void DeInit(GameStats& gameStats)
+	static void DeInit(GameStats& gameStats)
 	{
 		switch ((SceneStatus)gameStats.gameStatus)
 		{
