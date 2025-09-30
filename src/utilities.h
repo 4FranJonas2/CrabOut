@@ -54,5 +54,10 @@ namespace crabOut
 		bool isResetMatch = false;
 		bool goMenu = false;
 		int backGroundImage;
+		int coconut;
+		int redCoconut;
+		int yellowCoconut;
+		int greenCoconut;
+		int coconutTree;
 	};
 }
