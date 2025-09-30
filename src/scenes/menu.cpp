@@ -3,7 +3,7 @@
 
 namespace crabOut
 {
-	Vector2 recSize = { 90.0, 50.0};
+	Vector2 recSize = { 90.0, 50.0 };
 
 	bool IsMouseOverButton(Rectangle buttonRec)
 	{
@@ -62,7 +62,7 @@ namespace crabOut
 	}
 
 	void UpdateSceneMenus(GameStats& gameStats, MenuButtons buttons)
-	{	
+	{
 		gameStats.enterWasPressed = gameStats.enterIsPressed;
 		gameStats.enterIsPressed = slGetMouseButton(SL_MOUSE_BUTTON_LEFT);
 
@@ -139,10 +139,6 @@ namespace crabOut
 			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, exitText);
 			slSetFontSize(gameStats.fontSize);
 			slSetForeColor(1.0, 1.0, 1.0, 1.0);
-
-			/*DrawButtonRec(buttons.playButton);
-			DrawButtonRec(buttons.rulesButton);
-			DrawButtonRec(buttons.creditsButton);*/
 		}
 
 	}
@@ -167,6 +163,15 @@ namespace crabOut
 		float LineText6PosX = 50.0;
 		float LineText6PosY = 35.0;
 
+		float LineText7PosX = 170.0;
+		float LineText7PosY = 240.0;
+
+		float LineText8PosX = 170.0;
+		float LineText8PosY = 210.0;
+
+		float LineText9PosX = 170.0;
+		float LineText9PosY = 180.0;
+
 		if (gameStats.gameStatus == SceneStatus::GAMERULES)
 		{
 			int auxXPos = 15.0;
@@ -176,6 +181,9 @@ namespace crabOut
 			string winConditionText = "-Break all the blocks to win";
 			string loseConditionText1 = "-You will have 3 Lives, if the ball touch the bottom you ";
 			string loseConditionText2 = "lose 1 live, lose them all and its game over.";
+			string redCocoText = "RED coconut (PowerDown) slows you down.";
+			string yellowCocoText = "YELLOW coconut (PowerDown) makes you smaller.";
+			string greenCocoText = "GREEN coconut (PowerUp) makes you bigger.";
 			string exitText = "Back";
 
 			PrintMenuText(lineText1PosX, LineText1PosY, titleText);
@@ -185,9 +193,18 @@ namespace crabOut
 			PrintMenuText(LineText3PosX, LineText3PosY, winConditionText);
 			PrintMenuText(LineText4PosX - auxXPos, LineText4PosY, loseConditionText1);
 			PrintMenuText(LineText5PosX - auxXPos, LineText5PosY, loseConditionText2);
-			slSetFontSize(gameStats.fontSize);
+
+			PrintMenuText(LineText7PosX - auxXPos, LineText7PosY, redCocoText);
+			PrintMenuText(LineText8PosX - auxXPos, LineText8PosY, yellowCocoText);
+			PrintMenuText(LineText9PosX - auxXPos, LineText9PosY, greenCocoText);
 
 			slSetForeColor(1.0, 1.0, 1.0, 1.0);
+			slSprite(gameStats.redCoconut, 120.0,245.0, 16, 16);
+			slSprite(gameStats.yellowCoconut, 120.0, 215.0, 16, 16);
+			slSprite(gameStats.greenCoconut, 120.0, 185.0, 16, 16);
+		
+			slSetFontSize(gameStats.fontSize);
+
 			slSprite(gameStats.backButton, buttons.backButton.recPos.x, buttons.backButton.recPos.y,
 				buttons.backButton.recSize.x, buttons.backButton.recSize.y);
 			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
@@ -241,7 +258,7 @@ namespace crabOut
 			PrintMenuText(LineText6PosX - auxXPos, LineText6PosY, exitText);
 
 			DrawButtonRec(buttons.linkButton);
-			
+
 			slSetForeColor(1.0, 1.0, 1.0, 1.0);
 			slSprite(gameStats.backButton, buttons.backButton.recPos.x, buttons.backButton.recPos.y,
 				buttons.backButton.recSize.x, buttons.backButton.recSize.y);
