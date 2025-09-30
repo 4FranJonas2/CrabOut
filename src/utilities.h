@@ -60,5 +60,8 @@ namespace crabOut
 		int coconutTree;
 		int backButton;
 		int crabNormalWalk;
+		int bottle1;
+		int bottle2;
+		int bottle3;
 	};
 }

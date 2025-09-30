@@ -143,10 +143,23 @@ namespace crabOut
 	{
 		for (int i = 0; i < maxBricks; i++)
 		{
-			slSetForeColor(gameBricks[i].brickColor.r, gameBricks[i].brickColor.g, gameBricks[i].brickColor.b, gameBricks[i].brickColor.a);
-			slRectangleFill(gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
-				gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
 			slSetForeColor(1.0, 1.0, 1.0, 1.0);
+
+			if (gameBricks[i].brickLives == 3)
+			{
+				slSprite(gameStats.bottle1, gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
+					gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
+			}
+			if (gameBricks[i].brickLives == 2)
+			{
+				slSprite(gameStats.bottle2, gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
+					gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
+			}
+			if (gameBricks[i].brickLives == 1)
+			{
+				slSprite(gameStats.bottle3, gameBricks[i].brickRec.recPos.x, gameBricks[i].brickRec.recPos.y,
+					gameBricks[i].brickRec.recSize.x, gameBricks[i].brickRec.recSize.y);
+			}
 		}
 	}
 }

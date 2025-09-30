@@ -302,5 +302,8 @@ namespace crabOut
 		gameStats.coconutTree = slLoadTexture("res/menuTree.png");
 		gameStats.backButton = slLoadTexture("res/backButton.png");
 		gameStats.crabNormalWalk = slLoadTexture("res/crabNormalWalk.png");
+		gameStats.bottle1 = slLoadTexture("res/bottle1.png");
+		gameStats.bottle2 = slLoadTexture("res/bottle2.png");
+		gameStats.bottle3 = slLoadTexture("res/bottle3.png");
 	}
 }
