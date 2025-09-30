@@ -144,11 +144,12 @@ namespace crabOut
 		}
 	}
 
-	void DrawBall(Ball& ball)
+	void DrawBall(Ball& ball, GameStats gameCoconut)
 	{
-		slSetForeColor(ball.ballColor.r, ball.ballColor.g, ball.ballColor.b, 1.0);
-		slCircleFill(ball.ballCircle.pos.x, ball.ballCircle.pos.y,
-			ball.ballCircle.rad,50);
-		slSetForeColor(1.0, 1.0, 1.0, 1.0);
+		//slSetForeColor(ball.ballColor.r, ball.ballColor.g, ball.ballColor.b, 1.0);
+		/*slCircleFill(ball.ballCircle.pos.x, ball.ballCircle.pos.y,
+			ball.ballCircle.rad,50);*/
+		slSprite(gameCoconut.coconut, ball.ballCircle.pos.x, ball.ballCircle.pos.y, ball.ballCircle.rad*2, ball.ballCircle.rad*2);
+		//slSetForeColor(1.0, 1.0, 1.0, 1.0);
 	}
 }
