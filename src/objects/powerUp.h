@@ -22,6 +22,6 @@ namespace crabOut
 	void UpdatePowerUp(PowerUp powers[], Rectangle& playerRec, float& playerSpeed, bool& modActive, float& lastPowerTime);
 	bool CheckCollisionPowerPlayer(PowerUp powers[], Rectangle playerRec);
 	void CheckCollisionBallArena(PowerUp powers[]);
-	void DrawPowerUp(PowerUp powers[]);
+	void DrawPowerUp(PowerUp powers[], GameStats gameCoco);
 	void ResetPowerUps(PowerUp powers[], GameStats gamestats, Vector2& brickPos, bool& brickHit);
 }

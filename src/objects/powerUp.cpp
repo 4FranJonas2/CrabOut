@@ -162,16 +162,28 @@ namespace crabOut
 		}
 	}
 
-	void DrawPowerUp(PowerUp powers[])
+	void DrawPowerUp(PowerUp powers[], GameStats gameCoco)
 	{
 		for (int i = 0; i < maxPowers; i++)
 		{
 			if (powers[i].isActive == true)
 			{
-				slSetForeColor(powers[i].powerColor.r, powers[i].powerColor.g, powers[i].powerColor.b, powers[i].powerColor.a);
+				if (powers[i].isGreenPower == true)
+				{
+					slSprite(gameCoco.greenCoconut, powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y, powers[i].powerCircle.rad * 2, powers[i].powerCircle.rad * 2);
+				}
+				if (powers[i].isYellowPower == true)
+				{
+					slSprite(gameCoco.yellowCoconut, powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y, powers[i].powerCircle.rad * 2, powers[i].powerCircle.rad * 2);
+				}
+				if (powers[i].isRedPower == true)
+				{
+					slSprite(gameCoco.redCoconut, powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y, powers[i].powerCircle.rad * 2, powers[i].powerCircle.rad * 2);
+				}
+				/*slSetForeColor(powers[i].powerColor.r, powers[i].powerColor.g, powers[i].powerColor.b, powers[i].powerColor.a);
 				slCircleFill(powers[i].powerCircle.pos.x, powers[i].powerCircle.pos.y,
 					powers[i].powerCircle.rad, 50);
-				slSetForeColor(1.0, 1.0, 1.0, 1.0);
+				slSetForeColor(1.0, 1.0, 1.0, 1.0);*/
 			}
 		}
 	}
